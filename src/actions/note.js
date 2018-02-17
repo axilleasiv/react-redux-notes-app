@@ -1,0 +1,57 @@
+import {
+  NOTE_SELECT,
+  NOTE_DELETE,
+  NOTE_NEW,
+  NOTES_ADD,
+  NOTE_CHANGE_TEXT,
+  NOTES_FETCH,
+  NOTES_FETCH_ERROR,
+} from "../constants/actionTypes";
+
+
+const doNewNote = note => ({
+  type: NOTE_NEW
+});
+
+const doDeleteNote = note => ({
+  type: NOTE_DELETE
+});
+
+const doSelectNote = note => ({
+  type: NOTE_SELECT,
+  note
+});
+
+//maybe to move on Editor action
+//or use a general action for doChangeNote(note)
+const doChangeNoteText = text => {
+  return ({
+  type: NOTE_CHANGE_TEXT,
+  text
+})
+};
+
+const doAddNotes = stories => ({
+  type: NOTES_ADD,
+  stories
+});
+
+const doFetchNotes = query => ({
+  type: NOTES_FETCH,
+  query
+});
+
+const doFetchErrorNotes = error => ({
+  type: NOTES_FETCH_ERROR,
+  error
+});
+
+export {
+  doNewNote,
+  doDeleteNote,
+  doSelectNote,
+  doChangeNoteText,
+  doAddNotes,
+  doFetchNotes,
+  doFetchErrorNotes,
+};

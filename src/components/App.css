@@ -1,0 +1,15 @@
+.App {
+  text-align: left;
+}
+
+/* TEMP here */
+
+.note {
+  padding: 14px 10px;
+  border-bottom: 1px solid rgba(0,0,0,.07);
+  transition: background-color .28s ease;
+}
+
+.note.active {
+  background-color: #f5f5f5;
+}
