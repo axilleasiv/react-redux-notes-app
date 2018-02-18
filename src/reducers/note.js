@@ -72,7 +72,7 @@ const applyNewNote = (state, action) => {
   const date = new Date().getTime();
   const note = {
     id: Math.round(Math.random() * (50000000000 - 5) + 5), //TODO uuid v4
-    title: 'New title',
+    title: '',
     text: '',
     createdAt: date,
     editedAt: date

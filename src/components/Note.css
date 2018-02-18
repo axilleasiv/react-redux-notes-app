@@ -7,3 +7,21 @@
   composes: note;
   background-color: #f5f5f5;
 }
+
+:local(.title) {
+  font-weight: bold;
+  font-size: 14px;
+  margin: 0 0 7px; 
+}
+
+:local(.subtitle) {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  margin: 0;
+}
+
+:local(.date) {
+  font-size: 12px;
+  margin: 0 13px 0 0;
+}
