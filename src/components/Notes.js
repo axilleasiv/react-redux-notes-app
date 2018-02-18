@@ -8,7 +8,7 @@ const Notes = ({ notes, active }) => (
     {/* {error && <p className="error">Something went wrong ...</p>} */}
 
     {(notes || []).map(note => (
-      <Note key={note.id} note={note} className={note.id === (active && active.id) ? 'active' : ''} />
+      <Note key={note.id} note={note} className={note.id === (active && active.id) ? 'active' : 'note'} />
     ))}
   </div>
 );

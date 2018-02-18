@@ -3,11 +3,12 @@ import './App.css';
 import TopBar from './TopBar';
 import SideBar from './SideBar';
 import Editor from './Editor';
+import style from './App.css';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className={style.app}>
         <TopBar />
         <SideBar />
         <Editor />

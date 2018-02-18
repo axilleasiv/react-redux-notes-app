@@ -1,8 +1,8 @@
 import React from 'react';
-import './Editor.css';
 import { connect } from 'react-redux';
 import { getActiveNote } from '../selectors/note';
 import { doChangeNoteText } from '../actions/note';
+import style from './Editor.css';
 
 const getDate = (timestamp) => {
   const date = new Date(timestamp);
@@ -10,9 +10,10 @@ const getDate = (timestamp) => {
 }
 
 const Editor = ({ note, onChange }) => (
-  <section className="Editor">
-    <div className="Editor-date">{getDate(note.editedAt)}</div>
+  <section className={style.editor}>
+    <div className={style.date}>{getDate(note.editedAt)}</div>
     <textarea
+      className={style.textarea}
       placeholder="Write your note"
       value={note && note.text}
       onChange={({ target }) => onChange(target.value)}

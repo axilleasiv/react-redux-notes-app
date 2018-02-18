@@ -1,4 +1,4 @@
-.Sidebar {
+:local(.sidebar) {
   display: block;
   width: 30%;
   position: absolute;

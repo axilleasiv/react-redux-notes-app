@@ -1,9 +1,9 @@
-import React from "react";
-import "./SideBar.css";
+import React from 'react';
 import Notes from './Notes';
+import style from './SideBar.css';
 
 const SideBar = () =>
-  <aside className="Sidebar no-select">
+  <aside className={`${style.sidebar} no-select`}>
     <Notes />
   </aside>;
 

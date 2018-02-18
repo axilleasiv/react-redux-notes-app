@@ -1,0 +1,9 @@
+:local(.note) {
+  padding: 14px 10px;
+  border-bottom: 1px solid rgba(0,0,0,.07);
+}
+
+:local(.active) {
+  composes: note;
+  background-color: #f5f5f5;
+}

@@ -1,4 +1,4 @@
-.Editor {
+:local(.editor) {
   display: block;
   width: 70%;
   position: absolute;
@@ -8,19 +8,19 @@
   padding: 10px 15px 15px;
 }
 
-.Editor-date {
+:local(.date) {
   text-align: center;
   font-size: 11px;
   padding-bottom: 7px;
 }
 
-textarea {
+:local(.textarea) {
   width: 100%;
   height: 100%;
   border: 0px;
   font-size: 12px;
 }
 
-textarea:focus {
+:local(.textarea:focus) {
   outline: 0 !important;
 }

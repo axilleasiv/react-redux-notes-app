@@ -2,24 +2,24 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { doNewNote, doDeleteNote } from '../actions/note';
 import { getIfNewNote } from '../selectors/note'
-import './TopBar.css'
+import style from './TopBar.css'
 
 
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faEdit from "@fortawesome/fontawesome-free-solid/faEdit";
 import faTrashAlt from "@fortawesome/fontawesome-free-solid/faTrashAlt";
 
-const Button = ({ children, onClick, disabled }) =>
-  <button disabled={disabled} onClick={onClick}>{children}</button>
+const Button = ({ children, onClick, className = 'button', type = 'button', disabled }) =>
+  <button type={type} className={className} disabled={disabled} onClick={onClick}>{children}</button>
 
 const TopBar = ({ newNote, onClickNew, onClickDel }) => (
-  <header className="Top-header clearfix">
+  <header className={style.header}>
     
-    <Button disabled={newNote}  onClick={({ target }) => onClickNew(target.value)}>
+    <Button className={style.button} disabled={newNote}  onClick={({ target }) => onClickNew(target.value)}>
       <FontAwesomeIcon icon={faEdit} color="#c3c3c3" />
     </Button>
 
-    <Button onClick={({ target }) => onClickDel(target.value)}>
+    <Button className={style.button} onClick={({ target }) => onClickDel(target.value)}>
       <FontAwesomeIcon icon={faTrashAlt} color="#c3c3c3" />
     </Button>
   </header>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { doSelectNote } from '../actions/note';
+import style from './Note.css';
 
 const Note = ({note, className, onSelect}) => {
   const {
@@ -9,7 +10,7 @@ const Note = ({note, className, onSelect}) => {
 
   return (
     <div 
-      className={'note ' + className}
+      className={style[className]}
       onClick={() => onSelect(note)}
     >
       {title}
