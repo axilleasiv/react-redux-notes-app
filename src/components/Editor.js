@@ -4,8 +4,14 @@ import { connect } from 'react-redux';
 import { getActiveNote } from '../selectors/note';
 import { doChangeNoteText } from '../actions/note';
 
+const getDate = (timestamp) => {
+  const date = new Date(timestamp);
+  return `${date.toDateString()} at ${date.toLocaleTimeString()}`;
+}
+
 const Editor = ({ note, onChange }) => (
   <section className="Editor">
+    <div className="Editor-date">{getDate(note.editedAt)}</div>
     <textarea
       placeholder="Write your note"
       value={note && note.text}
@@ -22,12 +28,5 @@ const mapDispatchToProps = dispatch => ({
   onChange: value => dispatch(doChangeNoteText(value))
 });
 
-/* const mapDispatchToProps = function(dispatch) {
-  return {
-    onChange: function(value) {
-      return dispatch(doChangeNoteText(value));
-    }
-  }
-} */
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor);

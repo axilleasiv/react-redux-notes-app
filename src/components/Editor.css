@@ -5,7 +5,13 @@
   left: 30%;
   height: 100%;
   top: 40px;
-  padding: 15px;
+  padding: 10px 15px 15px;
+}
+
+.Editor-date {
+  text-align: center;
+  font-size: 11px;
+  padding-bottom: 7px;
 }
 
 textarea {
