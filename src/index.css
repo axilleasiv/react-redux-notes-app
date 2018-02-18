@@ -1,10 +1,7 @@
 html {
-  font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
-}
-
-html {
+  line-height: 1.15;
   font-size: 12px;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
@@ -15,7 +12,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   color: #34495e;
-  font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
   font-size: 15px;
   letter-spacing: 0;
   margin: 0;
@@ -43,17 +40,21 @@ body {
   box-sizing: border-box;
 }
 
-a, button, input, textarea {
-  transition: color .16s ease,border-color .28s ease,background-color .28s ease,opacity .28s ease;
+a {
+  background-color: transparent;
 }
 
-/* .clearfix-flex??? {
-  display: flow-root;
-} */
+a,
+button,
+input,
+textarea {
+  transition: color 0.16s ease, border-color 0.28s ease,
+    background-color 0.28s ease, opacity 0.28s ease;
+}
 
 .clearfix:before,
 .clearfix:after {
-  content: "";
+  content: '';
   display: table;
 }
 .clearfix:after {
@@ -65,4 +66,12 @@ a, button, input, textarea {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+p {
+  margin: 0 0 10px;
+}
+
+img {
+  border-style: none;
 }
