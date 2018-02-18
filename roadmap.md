@@ -5,10 +5,12 @@
 - flexbox
 - BEM methology
 - code splitting
+- Add moment for dates? var timeAgo = moment(this.props.message.createdAt).fromNow()
 
 ### Features
 - 1st version will support only browser rendering and will save to localstorage or indexedDB
 - First we will add sidebar that supports only the notes and after folders tags etc.
+- Resizable sidebars(https://github.com/tomkp/react-split-pane, https://github.com/DanFessler/react-panelgroup)
 - Add Main Editor
 - Add actions at the TopBar(New, Edit, Delete)
 - Add Search on the current Note
