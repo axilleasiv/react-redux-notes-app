@@ -4,10 +4,8 @@ import { doNewNote, doDeleteNote } from '../actions/note';
 import { getIfNewNote } from '../selectors/note'
 import style from './TopBar.css'
 
-
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import faEdit from "@fortawesome/fontawesome-free-solid/faEdit";
-import faTrashAlt from "@fortawesome/fontawesome-free-solid/faTrashAlt";
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { faEdit, faTrashAlt } from '@fortawesome/fontawesome-free-solid';
 
 const Button = ({ children, onClick, className = 'button', type = 'button', disabled }) =>
   <button type={type} className={className} disabled={disabled} onClick={onClick}>{children}</button>
