@@ -12,6 +12,7 @@ class Folder extends Component {
   componentDidMount() {
     if (this.input) {
       this.input.focus();
+      this.input.selectionStart = this.input.selectionEnd = this.input.value.length;
     }
   }
   render() {
