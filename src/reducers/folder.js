@@ -62,12 +62,19 @@ const applyEditFolder = (state, action) => {
 
 const applySaveFolder = (state, action) => {
   const active = state.active;
+  let folders = [];
 
-  const folders = state.folders.map(folder =>
-    folder.id === active.id
-      ? {id: folder.id, name: folder.name}
-      : folder
+  if (action.name === '') {
+    folders = state.folders.filter(folder => folder.id !== active.id);
+
+    console.log(folders);
+  } else {
+    folders = state.folders.map(folder =>
+      folder.id === active.id
+        ? {id: folder.id, name: folder.name}
+        : folder
     );
+  }
 
   return  {
     ...state,

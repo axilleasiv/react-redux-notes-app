@@ -16,8 +16,9 @@ const doEditFolder = name => ({
   name: name
 });
 
-const doSaveFolder = () => ({
+const doSaveFolder = (name) => ({
   type: FOLDER_SAVE,
+  name: name
 });
 
 const doDeleteFolder = folder => ({

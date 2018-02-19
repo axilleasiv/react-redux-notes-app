@@ -38,7 +38,7 @@ class Folder extends Component {
           type="text" 
           value={folder.name} 
           onChange={({target}) => onChange(target.value) }
-          onBlur={() => onBlur()}
+          onBlur={({target}) => onBlur(target.value)}
           ref={node => {this.input = node;}}
         />
          : 
@@ -51,7 +51,7 @@ class Folder extends Component {
 const mapDispatchToProps = dispatch => ({
   onSelect: folder => dispatch(doSelectFolder(folder)),
   onChange: (id, name) => dispatch(doEditFolder(id, name)),
-  onBlur: () => dispatch(doSaveFolder())
+  onBlur: (name) => dispatch(doSaveFolder(name))
 });
 
 export default connect(
