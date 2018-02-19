@@ -9,4 +9,6 @@ export const NOTES_ADD = "NOTES_ADD";
 
 export const FOLDER_SELECT = "FOLDER_SELECT";
 export const FOLDER_NEW = "FOLDER_NEW";
+export const FOLDER_EDIT = "FOLDER_EDIT";
+export const FOLDER_SAVE = "FOLDER_SAVE";
 export const FOLDER_DELETE = "FOLDER_DELETE";

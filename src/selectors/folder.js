@@ -1,4 +1,6 @@
-const getFolders = ({ folderState }) => folderState.folders;
+const getFolders = ({ folderState }) => {
+  return folderState.folders;
+};
 
 const getActiveFolder = ({ folderState }) => folderState.active;
 
