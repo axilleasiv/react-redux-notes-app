@@ -1,8 +1,9 @@
 :local(.new) {
+  min-width: 100px;
   position: absolute;
   bottom: 48px;
-  text-align: center;
-  left: 27px;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
 
 :local(.icon) {
