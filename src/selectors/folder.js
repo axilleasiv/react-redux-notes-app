@@ -4,5 +4,4 @@ const getFolders = ({ folderState }) => {
 
 const getActiveFolder = ({ folderState }) => folderState.active;
 
-
 export { getFolders, getActiveFolder };

@@ -56,13 +56,6 @@ const applyAddNotes = (state, action) => ({
   active: null
 });
 
-//store.dispatch
-// const applySelectNote = (state, action) => ({
-//   notes: state.notes,
-//   error: null,
-//   active: action.id
-// });
-
 const applySelectNote = (state, action) => ({
   ...state, 
   active: action.note

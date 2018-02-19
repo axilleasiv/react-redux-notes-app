@@ -6,7 +6,6 @@ import {
   FOLDER_EDIT,
 } from '../constants/actionTypes';
 
-
 const doNewFolder = folder => ({
   type: FOLDER_NEW
 });
@@ -29,7 +28,6 @@ const doSelectFolder = folder => ({
   type: FOLDER_SELECT,
   folder
 });
-
 
 export {
   doNewFolder,
