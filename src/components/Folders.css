@@ -1,0 +1,11 @@
+:local(.new) {
+  position: absolute;
+  bottom: 48px;
+  text-align: center;
+  left: 27px;
+}
+
+:local(.icon) {
+  display: inline-block;
+  margin-right: 4px;
+}

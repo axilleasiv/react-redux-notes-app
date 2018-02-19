@@ -1,11 +1,13 @@
 :local(.sidebar) {
   display: block;
-  width: 30%;
+  width: 20%;
   position: absolute;
-  left: 20%;
+  left: 0;
   height: 100%;
   top: 40px;
   border-right: 1px solid rgba(0,0,0,.07);
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  background-color: #f3f3f3;
+  padding: 20px 0px 10px;
 }

@@ -6,3 +6,7 @@ export const NOTE_CHANGE_TEXT = "NOTE_CHANGE_TEXT";
 export const NOTES_FETCH = "NOTES_FETCH";
 export const NOTES_FETCH_ERROR = "NOTES_FETCH_ERROR";
 export const NOTES_ADD = "NOTES_ADD";
+
+export const FOLDER_SELECT = "FOLDER_SELECT";
+export const FOLDER_NEW = "FOLDER_NEW";
+export const FOLDER_DELETE = "FOLDER_DELETE";
