@@ -3,3 +3,14 @@
   display: inline-block;
   text-align: center;
 }
+
+:local(.folder) {
+  font-size: 16px;
+  padding: 6px 0;
+}
+
+:local(.active) {
+  composes: folder;
+  background: #4d4df5;
+  color: #fff;
+}

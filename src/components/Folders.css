@@ -10,3 +10,14 @@
   display: inline-block;
   margin-right: 4px;
 }
+
+:local(.folders) {
+  position: absolute;
+  bottom: 83px;
+  top: 0px;
+  right: 0;
+  left: 0;
+  overflow: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
