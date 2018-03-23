@@ -1,4 +1,4 @@
-import { NOTE_ARCHIVE } from "../constants/actionTypes";
+import { NOTE_ARCHIVE } from '../constants/actionTypes';
 
 const INITIAL_STATE = [];
 
