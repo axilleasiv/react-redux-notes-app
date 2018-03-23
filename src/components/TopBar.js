@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { doNewNote, doDeleteNote } from '../actions/note';
 import { getIfNewNote } from '../selectors/note'
 import style from './TopBar.css'
+import Button from './Button';
 
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/fontawesome-free-solid';
