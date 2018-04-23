@@ -63,25 +63,46 @@ const applyEditFolder = (state, action) => {
   };
 };
 
+const findNextActiveOnRemove = (list, index) => {
+  //TODO
+  return list[list.length - 1];
+}
+
 const applySaveFolder = (state, action) => {
-  const active = state.active;
+  const prevActive = state.active;
   let folders = [];
+  let active;
 
   if (action.name === '') {
-    folders = state.folders.filter(folder => folder.id !== active.id);
+    let removedIndex;
 
-    console.log(folders);
+    folders = state.folders.filter((folder, index) => {
+      if (folder.id !== prevActive.id) {
+        return true;
+      }
+      removedIndex = index;
+      
+      return false;
+    });
+
+    active = findNextActiveOnRemove(folders, removedIndex);
   } else {
     folders = state.folders.map(folder =>
-      folder.id === active.id
-        ? {id: folder.id, name: folder.name}
+      folder.id === prevActive.id
+        ? {id: folder.id, name: action.name}
         : folder
     );
+
+    active = {
+      id: prevActive.id,
+      name: action.name
+    }
   }
 
   return  {
     ...state,
-    folders
+    folders,
+    active
   };
 }
 
