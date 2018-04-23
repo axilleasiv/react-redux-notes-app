@@ -3,26 +3,29 @@ import {
   FOLDER_NEW,
   FOLDER_EDIT,
   FOLDER_SAVE,
-  FOLDER_DELETE,
+  FOLDER_DELETE
 } from '../constants/actionTypes';
 
 const INITIAL_STATE = {
   folders: [
     {
       id: 1,
-      name: 'All Notes'
+      name: 'All' //syncing
     },
     {
       id: 2,
+      name: 'Notes'
+    },
+    {
+      id: 3,
       name: 'Recently Deleted'
-    }
+    },
   ],
 
   active: {
-    id: 1,
-    name: 'main'
-  },
-
+    id: 2,
+    name: 'All'
+  }
 };
 
 
@@ -33,7 +36,7 @@ const applySelectFolder = (state, action) => ({
 
 const addNewFolder = (state, action) => {
   const folder = {
-    id: Math.round(Math.random() * (50000000000 - 5) + 5), //TODO uuid v4
+    id: action.id,
     name: 'New Folder',
     new: true
   }

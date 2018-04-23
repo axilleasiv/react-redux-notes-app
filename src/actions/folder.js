@@ -5,9 +5,11 @@ import {
   FOLDER_SAVE,
   FOLDER_EDIT,
 } from '../constants/actionTypes';
+import uuidv4 from 'uuid/v4';
 
 const doNewFolder = folder => ({
-  type: FOLDER_NEW
+  type: FOLDER_NEW,
+  id: uuidv4()
 });
 
 const doEditFolder = name => ({
