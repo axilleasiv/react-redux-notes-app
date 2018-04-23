@@ -7,10 +7,13 @@ import {
   NOTES_FETCH,
   NOTES_FETCH_ERROR,
 } from "../constants/actionTypes";
+import uuidv4 from 'uuid/v4';
 
 
 const doNewNote = note => ({
-  type: NOTE_NEW
+  type: NOTE_NEW,
+  id: uuidv4(),
+  date: new Date().getTime()
 });
 
 const doDeleteNote = note => ({
@@ -27,6 +30,7 @@ const doSelectNote = note => ({
 const doChangeNoteText = text => {
   return ({
   type: NOTE_CHANGE_TEXT,
+  date: new Date().getTime(),
   text
 })
 };
