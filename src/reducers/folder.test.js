@@ -22,7 +22,7 @@ describe('folder reducer', () => {
         {id: 3,name: 'Recently Deleted'},
         {id: 4,name: 'My folder'},
       ],
-      active: {id: 3,name: 'Recently Deleted'}
+      active: {id: 3,name: 'Recently Deleted',selected: true}
     };
     const action = {
       type: FOLDER_SELECT,

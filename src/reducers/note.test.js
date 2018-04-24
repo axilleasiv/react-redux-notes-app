@@ -119,6 +119,7 @@ describe('note reducer', () => {
         id: 2,
         title: 'This is one more title',
         text: 'This is the text',
+        selected: true
       },
       error: null,
       newNote: false
@@ -132,7 +133,8 @@ describe('note reducer', () => {
           id: 2,
           title: 'This is one more title',
           text: 'This is the text',
-      }
+      },
+      selected: true
     };
 
     deepFreeze(stateBefore);
