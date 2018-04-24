@@ -6,7 +6,11 @@ import {
   NOTE_NEW,
   NOTE_DELETE
 } from '../constants/actionTypes';
-
+import {
+  FOLDER_ALL_ID,
+  FOLDER_NOTES_ID,
+  FOLDER_DELETED_ID,
+} from '../constants/folders';
 //TODO
 const INITIAL_STATE = {};
 
@@ -28,7 +32,7 @@ const applyNewNote = (state, action) => {
     text: '',
     createdAt: action.date,
     editedAt: action.date,
-    belongs: action.folderId === 1 ? 2 : action.folderId
+    belongs: action.folderId === FOLDER_ALL_ID ? FOLDER_NOTES_ID : action.folderId
   }
 
   return {
@@ -39,7 +43,7 @@ const applyNewNote = (state, action) => {
   }
 }
 
-const isNotDeleted = item => item.belongs !== 3;
+const isNotDeleted = item => item.belongs !== FOLDER_DELETED_ID;
 
 const findNextActiveOnRemove = (list, id) => {
   const nextActive = list.find(isNotDeleted);
@@ -53,7 +57,7 @@ const applyDeleteNote = (state, action) => {
   
   const notes = state.notes.map((note, index) => {
     if (note.id === active.id) {
-      return { ...note, belongs: 3,  belonged: note.belongs}
+      return { ...note, belongs: FOLDER_DELETED_ID, belonged: note.belongs };
     } else {
       return note;
     }

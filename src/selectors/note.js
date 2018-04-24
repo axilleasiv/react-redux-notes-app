@@ -8,7 +8,7 @@ const belongOnCurrentFolter = active => folder => {
 }
 
 const isNotDeleted = folder => {
-  return folder.belongs !== 3;
+  return folder.belongs !== FOLDER_DELETED_ID;
 };
 
 const getNotes = ({ noteState, folderState }) => {
