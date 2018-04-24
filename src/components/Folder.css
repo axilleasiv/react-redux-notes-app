@@ -9,8 +9,14 @@
   padding: 6px 0;
 }
 
-:local(.active) {
+:local(.selected) {
   composes: folder;
   background: #4d4df5;
+  color: #fff;
+}
+
+:local(.active) {
+  composes: folder;
+  background: #545455;
   color: #fff;
 }

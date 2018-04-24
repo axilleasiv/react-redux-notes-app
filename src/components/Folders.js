@@ -7,6 +7,18 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/fontawesome-free-solid';
 import style from './Folders.css';
 
+const getUiState = (folder, active) => {
+  if (folder.id === (active && active.id)) {
+      if (active.selected) {
+        return 'selected';
+      } else {
+        return 'active';
+      }
+  }
+
+  return 'folder';
+}
+
 const Folders = ({ folders, active, onClick }) => (
   <div>
     <div className={style.folders}>
@@ -14,7 +26,7 @@ const Folders = ({ folders, active, onClick }) => (
         <Folder
           key={folder.id}
           folder={folder}
-          active={folder.id === (active && active.id)}
+          uiState={getUiState(folder, active)}
         />
       ))}
     </div>

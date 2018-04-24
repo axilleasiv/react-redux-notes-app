@@ -18,16 +18,16 @@ class Folder extends Component {
   render() {
     const {
       folder,
-      active,
+      uiState,
       onChange,
       onSelect,
       onBlur,
     } = this.props;
 
     return (
-      <div className={active ? style.active : style.folder} onClick={() => onSelect(folder)}>
+      <div className={style[uiState]} onClick={() => onSelect(folder)}>
       <span className={style.icon}>
-        {active ? (
+        {(uiState !== 'folder') ? (
           <FontAwesomeIcon icon={farFolderOpen} color="#c3c3c3" />
         ) : (
           <FontAwesomeIcon icon={farFolder} color="#c3c3c3" />

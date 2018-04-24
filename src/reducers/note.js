@@ -1,6 +1,7 @@
 import {
   NOTES_ADD,
   NOTE_SELECT,
+  NOTE_DESELECT,
   NOTES_FETCH_ERROR,
   NOTE_CHANGE_TEXT,
   NOTE_NEW,
@@ -21,8 +22,19 @@ const applyAddNotes = (state, action) => ({
 });
 
 const applySelectNote = (state, action) => ({
-  ...state, 
-  active: action.note
+  ...state,
+  active: action.note ? {
+    ...action.note,
+    selected: action.selected
+  } : null
+});
+
+const applyDeSelectNote = (state, action) => ({
+  ...state,
+  active: {
+    ...state.active,
+    selected: false
+  }
 });
 
 const applyNewNote = (state, action) => {
@@ -120,6 +132,9 @@ function noteReducer(state = INITIAL_STATE, action) {
     }
     case NOTE_SELECT: {
       return applySelectNote(state, action);
+    }
+    case NOTE_DESELECT: {
+      return applyDeSelectNote(state, action);
     }
     case NOTE_CHANGE_TEXT: {
       return applyChangeText(state, action);

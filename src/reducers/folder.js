@@ -1,5 +1,6 @@
 import {
   FOLDER_SELECT,
+  FOLDER_DESELECT,
   FOLDER_NEW,
   FOLDER_EDIT,
   FOLDER_SAVE,
@@ -11,7 +12,18 @@ const INITIAL_STATE = {};
 
 const applySelectFolder = (state, action) => ({
   ...state, 
-  active: action.folder,
+  active: {
+    ...action.folder,
+    selected: true
+  },
+});
+
+const applyDeSelectFolder = (state, action) => ({
+  ...state,
+  active: {
+    ...state.active,
+    selected: false
+  }
 });
 
 const addNewFolder = (state, action) => {
@@ -106,6 +118,9 @@ function folderReducer(state = INITIAL_STATE, action) {
     }
     case FOLDER_SELECT: {
       return applySelectFolder(state, action);
+    }
+    case FOLDER_DESELECT: {
+      return applyDeSelectFolder(state, action);
     }
     default:
       return state;

@@ -6,6 +6,7 @@ import {
   NOTE_CHANGE_TEXT,
   NOTES_FETCH,
   NOTES_FETCH_ERROR,
+  FOLDER_DESELECT,
 } from "../constants/actionTypes";
 import uuidv4 from 'uuid/v4';
 
@@ -22,10 +23,18 @@ const doDeleteNote = note => ({
   type: NOTE_DELETE
 });
 
-const doSelectNote = note => ({
-  type: NOTE_SELECT,
-  note
-});
+const doSelectNote = note =>
+  (dispatch) => {
+    dispatch({
+      type: NOTE_SELECT,
+      note,
+      selected: true
+    })
+
+    dispatch({
+      type: FOLDER_DESELECT
+    })
+  }
 
 //maybe to move on Editor action
 //or use a general action for doChangeNote(note)
