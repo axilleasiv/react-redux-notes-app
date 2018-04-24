@@ -6,28 +6,8 @@ import {
   FOLDER_DELETE
 } from '../constants/actionTypes';
 
-const INITIAL_STATE = {
-  folders: [
-    {
-      id: 1,
-      name: 'All' //syncing
-    },
-    {
-      id: 2,
-      name: 'Notes'
-    },
-    {
-      id: 3,
-      name: 'Recently Deleted'
-    },
-  ],
-
-  active: {
-    id: 2,
-    name: 'All'
-  }
-};
-
+//TODO
+const INITIAL_STATE = {};
 
 const applySelectFolder = (state, action) => ({
   ...state, 
