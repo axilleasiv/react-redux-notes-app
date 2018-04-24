@@ -36,7 +36,10 @@ const addNewFolder = (state, action) => {
   return {
     ...state,
     folders: [...state.folders, folder],
-    active: folder,
+    active: {
+      ...folder,
+      selected: true
+    },
   }
 }
 
@@ -57,7 +60,10 @@ const applyEditFolder = (state, action) => {
 
 const findNextActiveOnRemove = (list, index) => {
   //TODO
-  return list[list.length - 1];
+  return {
+    ...list[list.length - 1],
+    selected: true
+  };
 }
 
 const applySaveFolder = (state, action) => {
@@ -87,7 +93,8 @@ const applySaveFolder = (state, action) => {
 
     active = {
       id: prevActive.id,
-      name: action.name
+      name: action.name,
+      selected: true
     }
   }
 
@@ -99,7 +106,14 @@ const applySaveFolder = (state, action) => {
 }
 
 const applyDeleteFolder = (state, action) => {
-  
+  const active = state.active;
+  const folders = state.folders.filter(folder => folder.id !== active.id);
+
+  return {
+    ...state,
+    folders,
+    active: findNextActiveOnRemove(folders),
+  };
 }
 
 function folderReducer(state = INITIAL_STATE, action) {

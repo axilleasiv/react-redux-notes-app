@@ -5,7 +5,8 @@ import {
   NOTES_FETCH_ERROR,
   NOTE_CHANGE_TEXT,
   NOTE_NEW,
-  NOTE_DELETE
+  NOTE_DELETE,
+  NOTES_DELETE_FROM_FOLDER
 } from '../constants/actionTypes';
 import {
   FOLDER_ALL_ID,
@@ -56,9 +57,11 @@ const applyNewNote = (state, action) => {
 }
 
 const isNotDeleted = item => item.belongs !== FOLDER_DELETED_ID;
+const belongsToFolder = folderId => item => item.belongs === folderId;
 
-const findNextActiveOnRemove = (list, id) => {
-  const nextActive = list.find(isNotDeleted);
+const findNextActiveOnRemove = (list, active) => {
+  const nextActive = list.filter(isNotDeleted)
+                          .find(belongsToFolder(active.belongs))
 
   return Object.assign({}, nextActive);
 };
@@ -81,11 +84,27 @@ const applyDeleteNote = (state, action) => {
 
   return  {
     ...state,
-    active: findNextActiveOnRemove(notes, active.id),
+    active: findNextActiveOnRemove(notes, active),
     notes,
     newNote,
   };
 }
+
+const applyDeleteFromFolder = (state, action) => {
+  const notes = state.notes.map((note, index) => {
+    if (note.belongs === action.folderId) {
+      return { ...note, belongs: FOLDER_DELETED_ID, belonged: note.belongs };
+    } else {
+      return note;
+    }
+  });
+
+
+  return {
+    ...state,
+    notes
+  };
+};
 
 const applyChangeText = (state, action) => {
   const active = state.active;
@@ -126,6 +145,9 @@ function noteReducer(state = INITIAL_STATE, action) {
     }
     case NOTE_DELETE: {
       return applyDeleteNote(state, action);
+    }
+    case NOTES_DELETE_FROM_FOLDER: {
+      return applyDeleteFromFolder(state, action);
     }
     case NOTES_ADD: {
       return applyAddNotes(state, action);

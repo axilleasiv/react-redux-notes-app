@@ -1,4 +1,4 @@
-import { FOLDER_DELETED_ID, FOLDER_ALL_ID} from '../constants/folders';
+import * as defaultFolders from '../constants/folders';
 
 /* const isNotArchived = archivedIds => note =>
   archivedIds.indexOf(note.id) === -1; */
@@ -8,13 +8,13 @@ const belongOnCurrentFolter = active => folder => {
 }
 
 const isNotDeleted = folder => {
-  return folder.belongs !== FOLDER_DELETED_ID;
+  return folder.belongs !== defaultFolders.FOLDER_DELETED_ID;
 };
 
 const getNotes = ({ noteState, folderState }) => {
   const folder = folderState.active;
 
-  if (folder.id === FOLDER_ALL_ID) {
+  if (folder.id === defaultFolders.FOLDER_ALL_ID) {
     return noteState.notes.filter(isNotDeleted);
   } else {
     return noteState.notes.filter(belongOnCurrentFolter(folder));
@@ -29,8 +29,13 @@ const getNextActiveNote = ({ noteState, folderState }) => {
 };
 
 const checkIfCanAddNewNote = ({ noteState, folderState }) => {
-  if (noteState.newNote || folderState.active.id === FOLDER_DELETED_ID) {
-    return false;
+  return !(noteState.newNote ||
+     folderState.active.id === defaultFolders.FOLDER_DELETED_ID);
+};
+
+const checkIfCanDelete = ({ folderState }) => {
+  if (folderState.active.selected) {
+    return !Object.values(defaultFolders).includes(folderState.active.id);
   }
 
   return true;
@@ -38,4 +43,11 @@ const checkIfCanAddNewNote = ({ noteState, folderState }) => {
 
 const getFetchError = ({ noteState }) => noteState.error;
 
-export { getNotes, getActiveNote, getNextActiveNote, getFetchError, checkIfCanAddNewNote };
+export {
+  getNotes,
+  getActiveNote,
+  getNextActiveNote,
+  getFetchError,
+  checkIfCanAddNewNote,
+  checkIfCanDelete
+};

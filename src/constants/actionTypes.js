@@ -3,6 +3,7 @@ export const NOTE_SELECT = "NOTE_SELECT";
 export const NOTE_DESELECT = "NOTE_DESELECT";
 export const NOTE_NEW = "NOTE_NEW";
 export const NOTE_DELETE = "NOTE_DELETE";
+export const NOTES_DELETE_FROM_FOLDER = "NOTES_DELETE_FROM_FOLDER";
 export const NOTE_CHANGE_TEXT = "NOTE_CHANGE_TEXT";
 export const NOTES_FETCH = "NOTES_FETCH";
 export const NOTES_FETCH_ERROR = "NOTES_FETCH_ERROR";

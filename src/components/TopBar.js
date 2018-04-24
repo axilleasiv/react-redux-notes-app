@@ -1,36 +1,40 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { doNewNote, doDeleteNote } from '../actions/note';
-import { getIfNewNote } from '../selectors/note'
-import style from './TopBar.css'
 import Button from './Button';
-
+import style from './TopBar.css';
+import { doNewNote, doDeleteNote } from '../actions/note';
+import { checkIfCanAddNewNote, checkIfCanDelete } from '../selectors/note';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/fontawesome-free-solid';
 
-const Button = ({ children, onClick, className = 'button', type = 'button', disabled }) =>
-  <button type={type} className={className} disabled={disabled} onClick={onClick}>{children}</button>
-
-const TopBar = ({ newNote, onClickNew, onClickDel }) => (
+const TopBar = ({ cannotAddNote, cannotDelete, onClickNew, onClickDel }) => (
   <header className={style.header}>
-    
-    <Button className={style.button} disabled={newNote}  onClick={({ target }) => onClickNew(target.value)}>
+    <Button
+      className={style.button}
+      disabled={cannotAddNote}
+      onClick={onClickNew}
+    >
       <FontAwesomeIcon icon={faEdit} color="#c3c3c3" />
     </Button>
 
-    <Button className={style.button} onClick={({ target }) => onClickDel(target.value)}>
+    <Button
+      className={style.button}
+      disabled={cannotDelete}
+      onClick={onClickDel}
+    >
       <FontAwesomeIcon icon={faTrashAlt} color="#c3c3c3" />
     </Button>
   </header>
 );
 
 const mapStateToProps = state => ({
-  newNote: getIfNewNote(state)
+  cannotAddNote: !checkIfCanAddNewNote(state),
+  cannotDelete: !checkIfCanDelete(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-  onClickNew: value => dispatch(doNewNote(value)),
-  onClickDel: value => dispatch(doDeleteNote(value))
+  onClickNew: () => dispatch(doNewNote()),
+  onClickDel: () => dispatch(doDeleteNote())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopBar);

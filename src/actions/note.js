@@ -1,12 +1,14 @@
 import {
   NOTE_SELECT,
   NOTE_DELETE,
+  NOTES_DELETE_FROM_FOLDER,
   NOTE_NEW,
   NOTES_ADD,
   NOTE_CHANGE_TEXT,
   NOTES_FETCH,
   NOTES_FETCH_ERROR,
   FOLDER_DESELECT,
+  FOLDER_DELETE,
 } from "../constants/actionTypes";
 import uuidv4 from 'uuid/v4';
 
@@ -19,9 +21,24 @@ const doNewNote = () =>
       folderId: getState().folderState.active.id
     })
 
-const doDeleteNote = note => ({
-  type: NOTE_DELETE
-});
+const doDeleteNote = () =>
+  (dispatch, getState) => {
+    const activeFolder = getState().folderState.active;
+
+    if (activeFolder.selected) {
+      dispatch({
+        type: FOLDER_DELETE
+      });
+      dispatch({
+        type: NOTES_DELETE_FROM_FOLDER,
+        folderId: activeFolder.id
+      });
+    } else {
+      dispatch({
+        type: NOTE_DELETE
+      });
+    }
+  }
 
 const doSelectNote = note =>
   (dispatch) => {
