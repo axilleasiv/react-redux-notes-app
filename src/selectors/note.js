@@ -1,13 +1,36 @@
-const isNotArchived = archivedIds => note =>
-  archivedIds.indexOf(note.id) === -1;
+import { FOLDER_DELETED_ID} from '../constants/folders';
 
-const getReadableNotes = ({ noteState, archiveState }) =>
-  noteState.notes.filter(isNotArchived(archiveState));
+/* const isNotArchived = archivedIds => note =>
+  archivedIds.indexOf(note.id) === -1; */
+
+const belongOnCurrentFolter = active => folder => {
+  return folder.belongs === active.id;
+}
+
+const isNotDeleted = folder => {
+  return folder.belongs !== 3;
+};
+
+const getNotes = ({ noteState, folderState }) => {
+  const active = folderState.active;
+
+  if (active.id === 1) {
+    return noteState.notes.filter(isNotDeleted);
+  } else {
+    return noteState.notes.filter(belongOnCurrentFolter(active));
+  }
+}
 
 const getActiveNote = ({ noteState }) => noteState.active;
 
-const getIfNewNote = ({ noteState }) => noteState.newNote;
+const checkIfCanAddNewNote = ({ noteState, folderState }) => {
+  if (noteState.newNote || folderState.active.id === FOLDER_DELETED_ID) {
+    return false;
+  }
+
+  return true;
+};
 
 const getFetchError = ({ noteState }) => noteState.error;
 
-export { getReadableNotes, getActiveNote, getFetchError, getIfNewNote };
+export { getNotes, getActiveNote, getFetchError, checkIfCanAddNewNote };

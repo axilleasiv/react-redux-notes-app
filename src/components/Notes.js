@@ -1,7 +1,7 @@
 import React from 'react';
 import Note from './Note'
 import { connect } from 'react-redux';
-import { getReadableNotes, getActiveNote } from '../selectors/note';
+import { getNotes, getActiveNote } from '../selectors/note';
 
 const Notes = ({ notes, active }) => (
   <div className="notes">
@@ -14,7 +14,7 @@ const Notes = ({ notes, active }) => (
 );
 
 const mapStateToProps = state => ({
-  notes: getReadableNotes(state),
+  notes: getNotes(state),
   active: getActiveNote(state)
 });
 
