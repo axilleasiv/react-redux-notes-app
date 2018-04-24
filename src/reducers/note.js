@@ -28,7 +28,7 @@ const applyNewNote = (state, action) => {
     text: '',
     createdAt: action.date,
     editedAt: action.date,
-    belongs: 2 //TODO add the current folder to belongs
+    belongs: action.folderId === 1 ? 2 : action.folderId
   }
 
   return {
@@ -59,9 +59,9 @@ const applyDeleteNote = (state, action) => {
     }
   });
 
-  if (notes[0].text === "") {
-    newNote = true;
-  }
+  // if (notes[0].text === "") {
+  //   newNote = true;
+  // }
 
   return  {
     ...state,

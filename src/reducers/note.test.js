@@ -81,10 +81,9 @@ describe('note reducer', () => {
     const action = {
       type: NOTE_NEW,
       id: 3,
-      date: 1524488625496
+      date: 1524488625496,
+      folderId: 2
     };
-
-    
 
     deepFreeze(stateBefore);
     deepFreeze(action);
@@ -136,8 +135,6 @@ describe('note reducer', () => {
       }
     };
 
-    
-
     deepFreeze(stateBefore);
     deepFreeze(action);
 
@@ -181,8 +178,6 @@ describe('note reducer', () => {
       date: 1524492310218
     };
 
-    
-
     deepFreeze(stateBefore);
     deepFreeze(action);
 
@@ -224,8 +219,6 @@ describe('note reducer', () => {
     const action = {
       type: NOTE_DELETE,
     };
-
-    
 
     deepFreeze(stateBefore);
     deepFreeze(action);

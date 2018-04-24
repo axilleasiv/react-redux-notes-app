@@ -9,12 +9,14 @@ import {
 } from "../constants/actionTypes";
 import uuidv4 from 'uuid/v4';
 
-
-const doNewNote = note => ({
-  type: NOTE_NEW,
-  id: uuidv4(),
-  date: new Date().getTime()
-});
+const doNewNote = () =>
+  (dispatch, getState) =>
+    dispatch({
+      type: NOTE_NEW,
+      id: uuidv4(),
+      date: new Date().getTime(),
+      folderId: getState().folderState.active.id
+    })
 
 const doDeleteNote = note => ({
   type: NOTE_DELETE
