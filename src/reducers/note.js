@@ -56,12 +56,12 @@ const applyNewNote = (state, action) => {
   }
 }
 
-const isNotDeleted = item => item.belongs !== FOLDER_DELETED_ID;
-const belongsToFolder = folderId => item => item.belongs === folderId;
+const isNotDeleted = item => item.folderId !== FOLDER_DELETED_ID;
+const belongsToFolder = folderId => item => item.folderId === folderId;
 
 const findNextActiveOnRemove = (list, active) => {
   const nextActive = list.filter(isNotDeleted)
-                          .find(belongsToFolder(active.belongs))
+                          .find(belongsToFolder(active.folderId))
 
   return Object.assign({}, nextActive);
 };
@@ -76,7 +76,7 @@ const applyDeleteNote = (state, action) => {
   } else {
     notes = state.notes.map((note, index) => {
       if (note.id === active.id) {
-        return { ...note, belongs: FOLDER_DELETED_ID, belonged: note.belongs };
+        return { ...note, belongs: FOLDER_DELETED_ID, belonged: note.folderId };
       } else {
         return note;
       }
@@ -93,8 +93,8 @@ const applyDeleteNote = (state, action) => {
 
 const applyDeleteFromFolder = (state, action) => {
   const notes = state.notes.map((note, index) => {
-    if (note.belongs === action.folderId) {
-      return { ...note, belongs: FOLDER_DELETED_ID, belonged: note.belongs };
+    if (note.folderId === action.folderId) {
+      return { ...note, belongs: FOLDER_DELETED_ID, belonged: note.folderId };
     } else {
       return note;
     }

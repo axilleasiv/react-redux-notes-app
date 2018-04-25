@@ -3,12 +3,12 @@ import * as defaultFolders from '../constants/folders';
 /* const isNotArchived = archivedIds => note =>
   archivedIds.indexOf(note.id) === -1; */
 
-const belongOnCurrentFolter = active => folder => {
-  return folder.belongs === active.id;
+const belongOnCurrentFolter = folder => note => {
+  return note.folderId === folder.id;
 }
 
-const isNotDeleted = folder => {
-  return folder.belongs !== defaultFolders.FOLDER_DELETED_ID;
+const isNotDeleted = note => {
+  return note.folderId !== defaultFolders.FOLDER_DELETED_ID;
 };
 
 const getNotes = ({ noteState, folderState }) => {
