@@ -69,18 +69,19 @@ const findNextActiveOnRemove = (list, active) => {
 const applyDeleteNote = (state, action) => {
   const active = state.active;
   let newNote = false;
-  
-  const notes = state.notes.map((note, index) => {
-    if (note.id === active.id) {
-      return { ...note, belongs: FOLDER_DELETED_ID, belonged: note.belongs };
-    } else {
-      return note;
-    }
-  });
+  let notes;
 
-  // if (notes[0].text === "") {
-  //   newNote = true;
-  // }
+  if (state.newNote) {
+    notes = state.notes.filter(note => note.id !== active.id);
+  } else {
+    notes = state.notes.map((note, index) => {
+      if (note.id === active.id) {
+        return { ...note, belongs: FOLDER_DELETED_ID, belonged: note.belongs };
+      } else {
+        return note;
+      }
+    });
+  }
 
   return  {
     ...state,

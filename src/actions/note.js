@@ -1,3 +1,4 @@
+import uuidv4 from 'uuid/v4';
 import {
   NOTE_SELECT,
   NOTE_DELETE,
@@ -9,8 +10,9 @@ import {
   NOTES_FETCH_ERROR,
   FOLDER_DESELECT,
   FOLDER_DELETE,
+  NOTE_DESELECT,
 } from "../constants/actionTypes";
-import uuidv4 from 'uuid/v4';
+import { getNextActiveNote } from '../selectors/note';
 
 const doNewNote = () =>
   (dispatch, getState) =>
@@ -33,10 +35,18 @@ const doDeleteNote = () =>
         type: NOTES_DELETE_FROM_FOLDER,
         folderId: activeFolder.id
       });
+      const note = getNextActiveNote(getState());
+      dispatch({
+        type: NOTE_SELECT,
+        note,
+        selected: false
+      });
     } else {
+      
       dispatch({
         type: NOTE_DELETE
       });
+
     }
   }
 
@@ -48,6 +58,16 @@ const doSelectNote = note =>
       selected: true
     })
 
+    dispatch({
+      type: FOLDER_DESELECT
+    })
+  }
+
+const doDeselect = note =>
+  (dispatch) => {
+    dispatch({
+      type: NOTE_DESELECT,
+    });
     dispatch({
       type: FOLDER_DESELECT
     })
@@ -86,4 +106,5 @@ export {
   doAddNotes,
   doFetchNotes,
   doFetchErrorNotes,
+  doDeselect,
 };
