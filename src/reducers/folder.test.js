@@ -47,7 +47,7 @@ describe('folder reducer', () => {
         {id: 4,name: 'My folder'},
         {id: 19, name: 'New Folder', new: true}
       ],
-      active: {id: 19,name: 'New Folder',new: true}
+      active: {id: 19,name: 'New Folder',new: true, selected: true}
     };
     const action = {
       type: FOLDER_NEW,
@@ -80,7 +80,7 @@ describe('folder reducer', () => {
         {id: 4,name: 'My folder'},
         {id: 19, name: 'One more folder'}
       ],
-      active: {id: 19, name: 'One more folder'}
+      active: {id: 19, name: 'One more folder', selected: true}
     };
     const action = {
       type: FOLDER_SAVE,
@@ -112,7 +112,7 @@ describe('folder reducer', () => {
         {id: 3, name: 'Recently Deleted'},
         {id: 4,name: 'My folder'},
       ],
-      active: {id: 4,name: 'My folder'},
+      active: {id: 4,name: 'My folder', selected: true},
     };
     const action = {
       type: FOLDER_SAVE,
