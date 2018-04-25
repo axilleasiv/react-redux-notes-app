@@ -4,6 +4,8 @@ import './App.css';
 import TopBar from './TopBar';
 import SideBar from './SideBar';
 import FolderSideBar from './FolderSideBar';
+import MainPanel from './MainPanel';
+import SearchBar from './SearchBar';
 import Editor from './Editor';
 import style from './App.css';
 
@@ -37,12 +39,15 @@ class App extends Component {
 
     return (
       <HotKeys keyMap={keyMap} handlers={handlers}>
-      <div className={style.app}>
-        <TopBar />
-        <FolderSideBar />
-        <SideBar />
-        <Editor />
-      </div>
+        <div className={style.app}>
+          <TopBar />
+          <FolderSideBar />
+          <SideBar />
+          <MainPanel>
+            <SearchBar />
+            <Editor />
+          </MainPanel>
+        </div>
       </HotKeys>
     );
   }

@@ -1,0 +1,9 @@
+:local(.main-panel) {
+  display: block;
+  width: 50%;
+  position: absolute;
+  left: 50%;
+  height: 100%;
+  top: 40px;
+  padding: 0px 0px 15px;
+}
