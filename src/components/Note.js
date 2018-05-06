@@ -8,8 +8,6 @@ const getDate = timestamp => {
   return `${date.toLocaleDateString()}`;
 };
 
-const notBlankLine = line => line !== '';
-
 const getTitle = text => {
   const MSG = 'New Note';
 
@@ -17,32 +15,25 @@ const getTitle = text => {
     return MSG;
   }
 
-  let title = text.split('\n').find(notBlankLine);
-  
-  return title ? title.substr(0, 30) : MSG;
+  return text.substr(0, 30);
 };
 
 const getSubTitle = text => {
   const MSG = 'No Additional text';
 
+  
   if (text === '') {
     return MSG;
   } 
   
-  let arr = text.split('\n');
-  let sub = '';
-  const titleindex = arr.findIndex(notBlankLine);
-
-  arr.splice(titleindex, 1);
-  sub = arr.find(notBlankLine);
-
-  return sub ? sub.substr(0, 25) : MSG;
+  return text.substr(0, 25);
 };
 
 const Note = ({note, className, onSelect}) => {
   const {
     createdAt,
-    text,
+    title,
+    subtitle
   } = note;
 
   return (
@@ -50,10 +41,10 @@ const Note = ({note, className, onSelect}) => {
       className={style[className]}
       onClick={() => onSelect(note)}
     >
-      <p className={style.title}>{getTitle(text)}</p>
+      <p className={style.title}>{getTitle(title)}</p>
       <p className={style.subtitle}>
         <span className={style.date}>{getDate(createdAt)}</span>
-        {getSubTitle(text)}
+        {getSubTitle(subtitle)}
       </p>
     </div>
   );

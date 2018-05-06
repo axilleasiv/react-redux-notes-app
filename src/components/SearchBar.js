@@ -4,9 +4,9 @@ import style from './SearchBar.css';
 
 class SearchBar extends Component {
   componentDidMount() {
-    if (this.input) {
-      this.input.focus();
-    }
+    // if (this.input) {
+    //   this.input.focus();
+    // }
   }
 
   render() {

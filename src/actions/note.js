@@ -5,7 +5,7 @@ import {
   NOTES_DELETE_FROM_FOLDER,
   NOTE_NEW,
   NOTES_ADD,
-  NOTE_CHANGE_TEXT,
+  NOTE_CHANGE,
   NOTES_FETCH,
   NOTES_FETCH_ERROR,
   FOLDER_DESELECT,
@@ -75,12 +75,14 @@ const doDeselect = note =>
 
 //maybe to move on Editor action
 //or use a general action for doChangeNote(note)
-const doChangeNoteText = text => {
+const doChangeNote = (text, title, subtitle) => {
   return ({
-  type: NOTE_CHANGE_TEXT,
-  date: new Date().getTime(),
-  text
-})
+    type: NOTE_CHANGE,
+    date: new Date().getTime(),
+    text,
+    title,
+    subtitle
+  })
 };
 
 const doAddNotes = stories => ({
@@ -102,7 +104,7 @@ export {
   doNewNote,
   doDeleteNote,
   doSelectNote,
-  doChangeNoteText,
+  doChangeNote,
   doAddNotes,
   doFetchNotes,
   doFetchErrorNotes,

@@ -1,7 +1,7 @@
 :local(.new) {
   min-width: 100px;
   position: absolute;
-  bottom: 48px;
+  bottom: 18px;
   left: 50%;
   transform: translate(-50%, 0);
 }

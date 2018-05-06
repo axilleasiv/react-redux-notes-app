@@ -3,7 +3,7 @@ import {
   NOTE_SELECT,
   NOTE_DESELECT,
   NOTES_FETCH_ERROR,
-  NOTE_CHANGE_TEXT,
+  NOTE_CHANGE,
   NOTE_NEW,
   NOTE_DELETE,
   NOTES_DELETE_FROM_FOLDER
@@ -42,10 +42,11 @@ const applyNewNote = (state, action) => {
   const note = {
     id: action.id,
     title: '',
+    subtitle: '',
     text: '',
     createdAt: action.date,
     editedAt: action.date,
-    belongs: action.folderId === FOLDER_ALL_ID ? FOLDER_NOTES_ID : action.folderId
+    folderId: action.folderId === FOLDER_ALL_ID ? FOLDER_NOTES_ID : action.folderId
   }
 
   return {
@@ -76,7 +77,7 @@ const applyDeleteNote = (state, action) => {
   } else {
     notes = state.notes.map((note, index) => {
       if (note.id === active.id) {
-        return { ...note, belongs: FOLDER_DELETED_ID, belonged: note.folderId };
+        return { ...note, folderId: FOLDER_DELETED_ID, belonged: note.folderId };
       } else {
         return note;
       }
@@ -94,7 +95,7 @@ const applyDeleteNote = (state, action) => {
 const applyDeleteFromFolder = (state, action) => {
   const notes = state.notes.map((note, index) => {
     if (note.folderId === action.folderId) {
-      return { ...note, belongs: FOLDER_DELETED_ID, belonged: note.folderId };
+      return { ...note, folderId: FOLDER_DELETED_ID, belonged: note.folderId };
     } else {
       return note;
     }
@@ -107,13 +108,13 @@ const applyDeleteFromFolder = (state, action) => {
   };
 };
 
-const applyChangeText = (state, action) => {
+const applyChangeNote = (state, action) => {
   const active = state.active;
   let newNote = false;
 
   const notes = state.notes.map(note =>
     note.id === active.id
-      ? { ...note, text: action.text, editedAt: action.date }
+      ? { ...note, text: action.text, title: action.title, subtitle: action.subtitle, editedAt: action.date }
       : note
     );
 
@@ -126,6 +127,8 @@ const applyChangeText = (state, action) => {
     active: {
       ...active,
       text: action.text,
+      title: action.title,
+      subtitle: action.subtitle,
       editedAt: action.date
     },
     notes,
@@ -159,8 +162,8 @@ function noteReducer(state = INITIAL_STATE, action) {
     case NOTE_DESELECT: {
       return applyDeSelectNote(state, action);
     }
-    case NOTE_CHANGE_TEXT: {
-      return applyChangeText(state, action);
+    case NOTE_CHANGE: {
+      return applyChangeNote(state, action);
     }
     case NOTES_FETCH_ERROR: {
       return applyFetchErrorNotes(state, action);
