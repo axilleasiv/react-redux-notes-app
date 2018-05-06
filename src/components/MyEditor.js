@@ -1,59 +1,72 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Editor,
-  EditorState,
   RichUtils,
   getDefaultKeyBinding,
-  convertFromRaw,
-  convertToRaw,
+  KeyBindingUtil,
 } from 'draft-js';
-// import { convertToHTML } from 'draft-convert';
-import { doChangeNote, doDeselect } from '../actions/note';
+import Editor from 'draft-js-plugins-editor';
+import createLinkifyPlugin from 'draft-js-linkify-plugin';
+import { doDeselect } from '../actions/note';
+import { doUpdateEditor, doLoadEditor } from '../actions/editor';
 import 'draft-js/dist/Draft.css';
+import 'draft-js-linkify-plugin/lib/plugin.css';
+
+const { hasCommandModifier } = KeyBindingUtil;
+const linkifyPlugin = createLinkifyPlugin({ target: '_blank' });
+const plugins = [linkifyPlugin];
+
 
 class MyEditor extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { editorState: EditorState.createEmpty(), note: null };
-
-    this.onChange = this.onChange.bind(this);
-    this.mapKeyToEditorCommand = this._mapKeyToEditorCommand.bind(this);
+    this.onTab = this.onTab.bind(this);
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
-  }
-
-  onChange(editorState) {
-    this.setState({ editorState, note: this.props.note });
+    this.myKeyBindingFn = this.myKeyBindingFn.bind(this);
   }
 
   componentDidMount() {
-    this._setRawContent(this.props.note.text);
+    const { note, editorState, onLoad } = this.props;
 
+    if (!editorState.loaded) {
+      onLoad(editorState, note);
+    }
+
+    //EditorState.moveFocusToEnd(editorState);
     // if (this.refs.editor) {
     //   this.refs.editor.focus();
     // }
   }
 
-  //TODO check this again
-  componentWillReceiveProps(nextProps, nextState) {
-    if (this.props.note.id !== nextProps.note.id) {
-      if (nextProps.note.text !== '') {
-        this._setRawContent(nextProps.note.text);
-      }
-    }
-  }
-
   handleKeyCommand(command, editorState) {
+    const { onChange } = this.props;
+    // if (command === 'myeditor-save') {
+    //   // Perform a request to save your contents, set
+    //   // a new `editorState`, etc.
+    //   return 'handled';
+    // }
+    // return 'not-handled';
     const newState = RichUtils.handleKeyCommand(editorState, command);
+
     if (newState) {
-      this.onChange(newState);
-      return true;
+      onChange(newState);
+      return 'handled';
     }
-    return false;
+    return 'not-handled';
   }
 
-  _mapKeyToEditorCommand(e) {
+  myKeyBindingFn(e) {
+    if (e.keyCode === 83 /* `S` key */ && hasCommandModifier(e)) {
+      return 'myeditor-save';
+    }
+    return getDefaultKeyBinding(e);
+  }
+
+  //TO REMOVE
+  mapKeyToEditorCommand(e) {
+    const { onChange } = this.props;
+
     if (e.keyCode === 9 /* TAB */) {
       const newEditorState = RichUtils.onTab(
         e,
@@ -61,65 +74,49 @@ class MyEditor extends Component {
         4 /* maxDepth */
       );
       if (newEditorState !== this.state.editorState) {
-        this.onChange(newEditorState);
+        onChange(newEditorState);
       }
       return;
     }
     return getDefaultKeyBinding(e);
   }
 
-  _setRawContent(rawContent) {
-    try {
-      const parsedJson = JSON.parse(rawContent);
-      this._setContentBlock(convertFromRaw(parsedJson));
-    } catch (err) {
-      console.error('The json is invalid');
-    }
-  }
-
-  _setContentBlock(content) {
-    this.onChange(EditorState.createWithContent(content));
+  //https://github.com/SamyPesse/draft-js-code/blob/master/lib/onTab.js
+  onTab(e) {
+    e.preventDefault();
+    return;
   }
 
   render() {
-    const { onChange, onFocus } = this.props;
+    const { onChange, onFocus, editorState } = this.props;
 
     return (
       <Editor
         placeholder="Write your note.."
         spellCheck={true}
-        editorState={this.state.editorState}
+        editorState={editorState.content}
         handleKeyCommand={this.handleKeyCommand}
-        keyBindingFn={this.mapKeyToEditorCommand}
+        keyBindingFn={this.myKeyBindingFn}
         ref="editor"
-        onChange={onChange.bind(this)}
+        onChange={onChange}
         onFocus={onFocus}
+        onTab={this.onTab}
+        plugins={plugins}
       />
     );
   }
 }
 
-const notBlankLine = item => item.text !== '';
-
-
 const mapDispatchToProps = dispatch => ({
-  onChange: function(editorState) {
-    //TODO
-    if (!this.state.note) {
-      return;
-    }
-
-    this.onChange(editorState);
-    
-    const raw = convertToRaw(editorState.getCurrentContent());
-    const text = JSON.stringify(raw);
-    const notBlankLines = raw.blocks.filter(notBlankLine);
-    const title = notBlankLines[0] ? notBlankLines[0].text : '';
-    const subtitle = notBlankLines[1] ? notBlankLines[1].text : '';
-
-    dispatch(doChangeNote(text, title, subtitle));
+  onLoad: (editorState, note) => {
+    dispatch(doLoadEditor(editorState, note));
+  },
+  onChange: (content) => {
+    dispatch(doUpdateEditor(content))
   },
   onFocus: () => dispatch(doDeselect())
 });
 
-export default connect(null, mapDispatchToProps)(MyEditor);
+const mapStateToProps = ({ editorState }) => ({ editorState });
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyEditor);

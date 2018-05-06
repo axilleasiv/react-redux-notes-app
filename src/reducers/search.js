@@ -1,17 +1,35 @@
-import { SEARCH } from '../constants/actionTypes';
+import { SEARCH, SEARCH_UPDATE_REPLACE } from '../constants/actionTypes';
 
-const INITIAL_STATE = [];
+const INITIAL_STATE = {
+  search: '',
+  replace: ''
+};
 
-const applyArchiveStory = (state, action) => [...state, action.id];
+const applyNewSearch = (state, action) => {
+  return {
+    ...state,
+    search: action.term
+  }
+};
 
-function archiveReducer(state = INITIAL_STATE, action) {
+const applyUpdateReplace = (state, action) => {
+  return {
+    ...state,
+    replace: action.term
+  };
+};
+
+const searchReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case SEARCH: {
-      return applyArchiveStory(state, action);
+      return applyNewSearch(state, action);
+    }
+    case SEARCH_UPDATE_REPLACE: {
+      return applyUpdateReplace(state, action);
     }
     default:
       return state;
   }
 }
 
-export default archiveReducer;
+export default searchReducer;

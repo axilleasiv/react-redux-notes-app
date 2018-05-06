@@ -24,3 +24,7 @@
 :local(.textarea:focus) {
   outline: 0 !important;
 }
+
+.search-and-replace-highlight {
+  background: gold;
+}

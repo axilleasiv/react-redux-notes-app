@@ -118,7 +118,7 @@ const applyChangeNote = (state, action) => {
       : note
     );
 
-  if (notes[0].text === '') {
+  if (notes[0].title === '' || action.title === '') {
     newNote = true;
   }
 

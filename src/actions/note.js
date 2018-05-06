@@ -11,17 +11,24 @@ import {
   FOLDER_DESELECT,
   FOLDER_DELETE,
   NOTE_DESELECT,
+  EDITOR_LOAD,
+  EDITOR_NEW
 } from "../constants/actionTypes";
 import { getNextActiveNote } from '../selectors/note';
 
 const doNewNote = () =>
-  (dispatch, getState) =>
+  (dispatch, getState) => {
     dispatch({
       type: NOTE_NEW,
       id: uuidv4(),
       date: new Date().getTime(),
       folderId: getState().folderState.active.id
     })
+
+    dispatch({
+      type: EDITOR_NEW
+    })
+  }
 
 const doDeleteNote = () =>
   (dispatch, getState) => {
@@ -41,11 +48,27 @@ const doDeleteNote = () =>
         note,
         selected: false
       });
+
+      if (note && note.text) {
+        dispatch({
+          type: EDITOR_LOAD,
+          note
+        });
+      }
     } else {
       
       dispatch({
         type: NOTE_DELETE
       });
+
+      const note = getNextActiveNote(getState());
+      
+      if (note && note.text) {
+        dispatch({
+          type: EDITOR_LOAD,
+          note
+        });
+      }
 
     }
   }
@@ -56,6 +79,11 @@ const doSelectNote = note =>
       type: NOTE_SELECT,
       note,
       selected: true
+    })
+
+    dispatch({
+      type: EDITOR_LOAD,
+      note
     })
 
     dispatch({

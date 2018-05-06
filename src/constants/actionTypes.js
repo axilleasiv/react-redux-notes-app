@@ -17,3 +17,10 @@ export const FOLDER_SAVE = "FOLDER_SAVE";
 export const FOLDER_DELETE = "FOLDER_DELETE";
 
 export const SEARCH = "SEARCH";
+export const SEARCH_UPDATE_REPLACE = "SEARCH_UPDATE_REPLACE";
+
+export const EDITOR_NEW = "EDITOR_NEW";
+export const EDITOR_LOAD = "EDITOR_LOAD";
+export const EDITOR_UPDATE = "EDITOR_UPDATE";
+export const EDITOR_SEARCH = "EDITOR_SEARCH";
+export const EDITOR_REPLACE = "EDITOR_REPLACE";

@@ -12,14 +12,14 @@ class Editor extends Component {
 
     return (
       <section className={style.editor}>
-        {note && (
+        {(note && note.hasOwnProperty('text'))  && (
           <DateWidget
             default={note.editedAt}
             createdAt={note.createdAt}
             editedAt={note.editedAt}
           />
         )}
-        {note && (
+        {(note && note.hasOwnProperty('text'))  && (
           <MyEditor note={note} />
         )}
       </section>
