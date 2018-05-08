@@ -11,13 +11,17 @@ const isNotDeleted = note => {
   return note.folderId !== defaultFolders.FOLDER_DELETED_ID;
 };
 
+const mostRecent = (a, b) => b.editedAt - a.editedAt;
+
 const getNotes = ({ noteState, folderState }) => {
   const folder = folderState.active;
 
   if (folder.id === defaultFolders.FOLDER_ALL_ID) {
-    return noteState.notes.filter(isNotDeleted);
+    return noteState.notes.filter(isNotDeleted)
+                          .sort(mostRecent);
   } else {
-    return noteState.notes.filter(belongOnCurrentFolter(folder));
+    return noteState.notes.filter(belongOnCurrentFolter(folder))
+                          .sort(mostRecent)
   }
 }
 
