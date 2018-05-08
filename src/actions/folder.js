@@ -7,6 +7,7 @@ import {
   FOLDER_EDIT,
   NOTE_SELECT,
   NOTE_DESELECT,
+  EDITOR_LOAD
 } from '../constants/actionTypes';
 import { getNextActiveNote } from '../selectors/note';
 
@@ -40,11 +41,19 @@ const doSelectFolder = (folder) =>
 
     if (activeFolder.id !== folder.id) {
       const note = getNextActiveNote(getState());
-      dispatch({
-        type: NOTE_SELECT,
-        note,
-        selected: false
-      });
+
+      if (note) {
+        dispatch({
+          type: NOTE_SELECT,
+          note,
+          selected: false
+        });
+
+        dispatch({
+          type: EDITOR_LOAD,
+          note
+        })
+      }
     } else {
       dispatch({type: NOTE_DESELECT});
     }
