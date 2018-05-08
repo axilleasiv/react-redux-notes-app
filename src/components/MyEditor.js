@@ -8,6 +8,7 @@ import {
 import Editor from 'draft-js-plugins-editor';
 import createLinkifyPlugin from 'draft-js-linkify-plugin';
 import { doDeselect } from '../actions/note';
+import { isNotDeleted } from '../selectors/note'
 import { doUpdateEditor, doLoadEditor } from '../actions/editor';
 import 'draft-js/dist/Draft.css';
 import 'draft-js-linkify-plugin/lib/plugin.css';
@@ -88,7 +89,7 @@ class MyEditor extends Component {
   }
 
   render() {
-    const { onChange, onFocus, editorState } = this.props;
+    const { onChange, onFocus, editorState, note } = this.props;
 
     return (
       <Editor
@@ -101,6 +102,7 @@ class MyEditor extends Component {
         onChange={onChange}
         onFocus={onFocus}
         onTab={this.onTab}
+        readOnly={!isNotDeleted(note)}
         plugins={plugins}
       />
     );

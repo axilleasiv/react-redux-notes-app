@@ -53,5 +53,6 @@ export {
   getNextActiveNote,
   getFetchError,
   checkIfCanAddNewNote,
-  checkIfCanDelete
+  checkIfCanDelete,
+  isNotDeleted,
 };
