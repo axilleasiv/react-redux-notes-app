@@ -37,6 +37,7 @@ class Folder extends Component {
         <input 
           type="text" 
           value={folder.name} 
+          id="folderNew"
           onChange={({target}) => onChange(target.value) }
           onBlur={({target}) => onBlur(target.value)}
           ref={node => {this.input = node;}}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { HotKeys } from 'react-hotkeys';
 import './App.css';
 import TopBar from './TopBar';
@@ -8,49 +9,59 @@ import MainPanel from './MainPanel';
 import SearchBar from './SearchBar';
 import Editor from './Editor';
 import style from './App.css';
+import { doEnableDocSearch, doDisableDocSearch } from '../actions/tools';
+import { doSaveFolder } from '../actions/folder';
 
+const keyMap = {
+  showSearch: [`command+f`, `ctrl+f`],
+  dismiss: 'escape',
+  onEnter: 'enter'
+};
+//stateless?
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.triggerSearch = this.triggerSearch.bind(this);
-    this.dismiss = this.dismiss.bind(this);
-    this.onEnter = this.onEnter.bind(this);
-  }
-
-  dismiss(e) { e.preventDefault()}
-
-  triggerSearch(e) { e.preventDefault() }
-
-  onEnter(e) {}
-
   render() {
-    const keyMap = {
-      openSearch: [`command+f`, `ctrl+f`],
-      dismiss: 'escape',
-      onEnter: 'enter'
-    };
+    const {
+      searchDocEnabled,
+      handlers
+    } = this.props;
 
-    const handlers = {
-      openSearch: this.triggerSearch,
-      dismiss: this.dismiss,
-      onEnter: this.onEnter
-    };
-
-    return (
-      <HotKeys keyMap={keyMap} handlers={handlers}>
+    return <HotKeys keyMap={keyMap} handlers={handlers}>
         <div className={style.app}>
           <TopBar />
           <FolderSideBar />
           <SideBar />
           <MainPanel>
-            <SearchBar />
+          {searchDocEnabled && <SearchBar />}
             <Editor />
           </MainPanel>
         </div>
-      </HotKeys>
-    );
+      </HotKeys>;
   }
 }
 
-export default App;
+const mapStateToProps = ({ toolsState }) => ({
+  searchDocEnabled: toolsState.searchDoc.enabled
+});
+
+const mapDispatchToProps = dispatch => ({
+  handlers: {
+    showSearch: (e) => {
+      e.preventDefault();
+      dispatch(doEnableDocSearch())
+    },
+
+    dismiss: (e) => {
+      e.preventDefault()
+      dispatch(doDisableDocSearch());
+    },
+
+    onEnter: (e) => {
+      console.log(e.target);
+      if (e.target.id === 'folderNew') {
+        dispatch(doSaveFolder(e.target.value));
+      }
+    }
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

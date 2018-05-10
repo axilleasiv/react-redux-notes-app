@@ -1,22 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import style from './SearchBar.css';
-import { doNewSearch, doUpdateReplace, doReplace } from '../actions/search'
+import {
+  doNewSearch,
+  doUpdateReplace,
+  doReplace,
+  doToggleReplace
+} from '../actions/tools';
 
 class SearchBar extends Component {
   componentDidMount() {
-    // if (this.input) {
-    //   this.input.focus();
-    // }
+    if (this.inputSearch) {
+      this.inputSearch.focus();
+    }
   }
 
   render() {
     const { 
       search,
       replace,
+      replaceEnabled,
       onChangeSearch,
       onChangeReplace,
-      onReplace 
+      onReplace ,
+      toggleReplace,
     } = this.props;
 
     return (
@@ -27,34 +34,45 @@ class SearchBar extends Component {
           placeholder="Search"
           value={search}
           onChange={onChangeSearch}
-          // ref={node => {
-          //   this.input = node;
-          // }}
+          ref={node => {
+            this.inputSearch = node;
+          }}
         />
-        <input
-          className={style.input}
-          type="text"
-          placeholder="Replace"
-          value={replace}
-          onChange={onChangeReplace}
-          // ref={node => {
-          //   this.input = node;
-          // }}
-        />
-        <button onClick={onReplace}>Replace</button>
+        <button>Done</button>
+        <div className={style.replace}>
+          <input 
+            type="checkbox"
+            id="replace"
+            checked={replaceEnabled}
+            onClick={toggleReplace} 
+          />
+          <label htmlFor="replace">Replace</label>
+        </div>
+        <div className={replaceEnabled ? style.visible : style.hidden}>
+          <input
+            className={style.input}
+            type="text"
+            placeholder="Replace"
+            value={replace}
+            onChange={onChangeReplace}
+          />
+          <button onClick={onReplace}>Replace</button>
+        </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ searchState }) => ({
-  search: searchState.search,
-  replace: searchState.replace
+const mapStateToProps = ({ toolsState }) => ({
+  search: toolsState.searchDoc.search,
+  replace: toolsState.searchDoc.replace,
+  replaceEnabled: toolsState.searchDoc.replaceEnabled
 });
 
 const mapDispatchToProps = dispatch => ({
   onChangeSearch: ({target}) => dispatch(doNewSearch(target.value)),
   onChangeReplace: ({target}) => dispatch(doUpdateReplace(target.value)),
+  toggleReplace: () => dispatch(doToggleReplace()),
   onReplace: () => dispatch(doReplace())
 });
 
