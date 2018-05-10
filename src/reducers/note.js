@@ -6,7 +6,8 @@ import {
   NOTE_CHANGE,
   NOTE_NEW,
   NOTE_DELETE,
-  NOTES_DELETE_FROM_FOLDER
+  NOTES_DELETE_FROM_FOLDER,
+  NOTE_REMOVE_ACTIVE,
 } from '../constants/actionTypes';
 import {
   FOLDER_ALL_ID,
@@ -22,12 +23,20 @@ const applyAddNotes = (state, action) => ({
   active: null
 });
 
+const isNotNewNote = note => note.title !== '';
 const applySelectNote = (state, action) => ({
   ...state,
+  notes: state.notes.filter(isNotNewNote),
   active: action.note ? {
     ...action.note,
     selected: action.selected
   } : null
+});
+
+const applyRemoveActiveNote = (state, action) => ({
+  ...state,
+  notes: state.notes.filter(isNotNewNote),
+  active: null
 });
 
 const applyDeSelectNote = (state, action) => ({
@@ -52,8 +61,7 @@ const applyNewNote = (state, action) => {
   return {
     ...state,
     notes: [note, ...state.notes],    
-    active: note,
-    newNote: true
+    active: note
   }
 }
 
@@ -69,7 +77,6 @@ const findNextActiveOnRemove = (list, active) => {
 
 const applyDeleteNote = (state, action) => {
   const active = state.active;
-  let newNote = false;
   let notes;
 
   if (state.newNote) {
@@ -88,7 +95,6 @@ const applyDeleteNote = (state, action) => {
     ...state,
     active: findNextActiveOnRemove(notes, active),
     notes,
-    newNote,
   };
 }
 
@@ -110,17 +116,17 @@ const applyDeleteFromFolder = (state, action) => {
 
 const applyChangeNote = (state, action) => {
   const active = state.active;
-  let newNote = false;
+
+  //TODO use this somewhere else
+  if (action.text === active.text) {
+    return state;
+  }
 
   const notes = state.notes.map(note =>
     note.id === active.id
       ? { ...note, text: action.text, title: action.title, subtitle: action.subtitle, editedAt: action.date }
       : note
     );
-
-  if (notes[0].title === '' || action.title === '') {
-    newNote = true;
-  }
 
   return  {
     ...state,
@@ -131,8 +137,7 @@ const applyChangeNote = (state, action) => {
       subtitle: action.subtitle,
       editedAt: action.date
     },
-    notes,
-    newNote,
+    notes
   };
 }
 
@@ -164,6 +169,9 @@ function noteReducer(state = INITIAL_STATE, action) {
     }
     case NOTE_CHANGE: {
       return applyChangeNote(state, action);
+    }
+    case NOTE_REMOVE_ACTIVE: {
+      return applyRemoveActiveNote(state, action);
     }
     case NOTES_FETCH_ERROR: {
       return applyFetchErrorNotes(state, action);

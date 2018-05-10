@@ -33,7 +33,7 @@ const getNextActiveNote = ({ noteState, folderState }) => {
 };
 
 const checkIfCanAddNewNote = ({ noteState, folderState }) => {
-  return !(noteState.newNote ||
+  return !((noteState.active && noteState.active.title === '') ||
      folderState.active.id === defaultFolders.FOLDER_DELETED_ID);
 };
 

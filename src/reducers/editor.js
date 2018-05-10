@@ -101,9 +101,11 @@ const applyUpdateStateOnReplace = (state, action) => {
 };
 
 const applyLoadState = (state, action) => {
+  const newContent = getFromRawContent(action.note.text);
+
   return {
     ...state,
-    content: getFromRawContent(action.note.text),
+    content: newContent,
     loaded: true
   }
 }

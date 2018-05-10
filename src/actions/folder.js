@@ -7,14 +7,21 @@ import {
   FOLDER_EDIT,
   NOTE_SELECT,
   NOTE_DESELECT,
+  NOTE_REMOVE_ACTIVE,
   EDITOR_LOAD
 } from '../constants/actionTypes';
 import { getNextActiveNote } from '../selectors/note';
 
-const doNewFolder = folder => ({
-  type: FOLDER_NEW,
-  id: uuidv4()
-});
+const doNewFolder = folder => dispatch => {
+  dispatch({
+    type: NOTE_REMOVE_ACTIVE
+  });
+
+  dispatch({
+    type: FOLDER_NEW,
+    id: uuidv4()
+  });
+} 
 
 const doEditFolder = name => ({
   type: FOLDER_EDIT,
@@ -42,13 +49,13 @@ const doSelectFolder = (folder) =>
     if (activeFolder.id !== folder.id) {
       const note = getNextActiveNote(getState());
 
-      if (note) {
-        dispatch({
-          type: NOTE_SELECT,
-          note,
-          selected: false
-        });
+      dispatch({
+        type: NOTE_SELECT,
+        note,
+        selected: false
+      });
 
+      if (note) {
         dispatch({
           type: EDITOR_LOAD,
           note

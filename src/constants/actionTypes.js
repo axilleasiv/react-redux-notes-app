@@ -8,6 +8,7 @@ export const NOTE_CHANGE = "NOTE_CHANGE";
 export const NOTES_FETCH = "NOTES_FETCH";
 export const NOTES_FETCH_ERROR = "NOTES_FETCH_ERROR";
 export const NOTES_ADD = "NOTES_ADD";
+export const NOTE_REMOVE_ACTIVE = "NOTE_REMOVE_ACTIVE";
 
 export const FOLDER_SELECT = "FOLDER_SELECT";
 export const FOLDER_DESELECT = "FOLDER_DESELECT";
@@ -18,6 +19,7 @@ export const FOLDER_DELETE = "FOLDER_DELETE";
 
 export const SEARCH = "SEARCH";
 export const SEARCH_UPDATE_REPLACE = "SEARCH_UPDATE_REPLACE";
+export const SEARCH_TOGGLE_REPLACE = "SEARCH_TOGGLE_REPLACE";
 
 export const EDITOR_NEW = "EDITOR_NEW";
 export const EDITOR_LOAD = "EDITOR_LOAD";

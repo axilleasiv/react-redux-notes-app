@@ -6,6 +6,7 @@ import {
   NOTE_NEW,
   NOTES_ADD,
   NOTE_CHANGE,
+  NOTE_REMOVE_ACTIVE,
   NOTES_FETCH,
   NOTES_FETCH_ERROR,
   FOLDER_DESELECT,
@@ -113,6 +114,10 @@ const doChangeNote = (text, title, subtitle) => {
   })
 };
 
+const doRemoveActive = () => ({
+  type: NOTE_REMOVE_ACTIVE
+});
+
 const doAddNotes = stories => ({
   type: NOTES_ADD,
   stories
@@ -137,4 +142,5 @@ export {
   doFetchNotes,
   doFetchErrorNotes,
   doDeselect,
+  doRemoveActive
 };
