@@ -5,8 +5,13 @@ import {
   SEARCH_DOC_DISABLE,
   SEARCH_UPDATE_REPLACE,
   SEARCH_TOGGLE_REPLACE,
+  SEARCH_NOTES,
   EDITOR_REPLACE,
+  EDITOR_LOAD,
+  NOTE_SELECT,
+  NOTES_ON_SEARCH,
 } from '../constants/actionTypes';
+import { getNextActiveNote } from '../selectors/note';
 
 const doNewSearch = term => (dispatch, getState) => {
   dispatch({
@@ -46,11 +51,42 @@ const doDisableDocSearch = () => ({
   type: SEARCH_DOC_DISABLE
 });
 
+const doSearchNotes = term =>
+  (dispatch, getState) => {
+    dispatch({
+      type: SEARCH_NOTES,
+      term
+    });
+
+    dispatch({
+      type: NOTES_ON_SEARCH,
+      term
+    });
+
+    const note = getNextActiveNote(getState());
+
+    dispatch({
+      type: NOTE_SELECT,
+      note,
+      selected: false
+    });
+
+    if (note) {
+      dispatch({
+        type: EDITOR_LOAD,
+        note
+      })
+    }
+
+  }
+  
+
 export {
   doUpdateReplace,
   doNewSearch,
   doReplace,
   doToggleReplace,
   doEnableDocSearch,
-  doDisableDocSearch
+  doDisableDocSearch,
+  doSearchNotes
 };

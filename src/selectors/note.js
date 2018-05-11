@@ -13,8 +13,12 @@ const isNotDeleted = note => {
 
 const mostRecent = (a, b) => b.editedAt - a.editedAt;
 
-const getNotes = ({ noteState, folderState }) => {
+const getNotes = ({ noteState, folderState, toolsState }) => {
   const folder = folderState.active;
+
+  if (toolsState.searchNotes.search !== '') {
+    return noteState.searched.sort(mostRecent);
+  }
 
   if (folder.id === defaultFolders.FOLDER_ALL_ID) {
     return noteState.notes.filter(isNotDeleted)
@@ -27,8 +31,8 @@ const getNotes = ({ noteState, folderState }) => {
 
 const getActiveNote = ({ noteState }) => noteState.active;
 
-const getNextActiveNote = ({ noteState, folderState }) => {
-  let notes = getNotes({ noteState, folderState });
+const getNextActiveNote = ({ noteState, folderState, toolsState }) => {
+  let notes = getNotes({ noteState, folderState, toolsState });
   return notes.length > 0 ? notes[0] : null;
 };
 

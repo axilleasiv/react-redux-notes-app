@@ -5,7 +5,8 @@ import {
   doNewSearch,
   doUpdateReplace,
   doReplace,
-  doToggleReplace
+  doToggleReplace,
+  doDisableDocSearch
 } from '../actions/tools';
 
 class SearchBar extends Component {
@@ -24,6 +25,7 @@ class SearchBar extends Component {
       onChangeReplace,
       onReplace ,
       toggleReplace,
+      onClick
     } = this.props;
 
     return (
@@ -38,7 +40,7 @@ class SearchBar extends Component {
             this.inputSearch = node;
           }}
         />
-        <button>Done</button>
+        <button onClick={onClick}>Done</button>
         <div className={style.replace}>
           <input 
             type="checkbox"
@@ -73,7 +75,8 @@ const mapDispatchToProps = dispatch => ({
   onChangeSearch: ({target}) => dispatch(doNewSearch(target.value)),
   onChangeReplace: ({target}) => dispatch(doUpdateReplace(target.value)),
   toggleReplace: () => dispatch(doToggleReplace()),
-  onReplace: () => dispatch(doReplace())
+  onReplace: () => dispatch(doReplace()),
+  onClick: () => dispatch(doDisableDocSearch())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

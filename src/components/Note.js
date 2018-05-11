@@ -29,11 +29,17 @@ const getSubTitle = text => {
   return text.substr(0, 25);
 };
 
+const formatSearch = search => {
+
+  return search.text.substr(0, 25);
+};
+
 const Note = ({note, className, onSelect}) => {
   const {
     createdAt,
     title,
-    subtitle
+    subtitle,
+    search
   } = note;
 
   return (
@@ -44,7 +50,7 @@ const Note = ({note, className, onSelect}) => {
       <p className={style.title}>{getTitle(title)}</p>
       <p className={style.subtitle}>
         <span className={style.date}>{getDate(createdAt)}</span>
-        {getSubTitle(subtitle)}
+        {search ? formatSearch(search) : getSubTitle(subtitle)}
       </p>
     </div>
   );

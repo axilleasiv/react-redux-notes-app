@@ -8,6 +8,7 @@ import {
   NOTE_DELETE,
   NOTES_DELETE_FROM_FOLDER,
   NOTE_REMOVE_ACTIVE,
+  NOTES_ON_SEARCH,
 } from '../constants/actionTypes';
 import {
   FOLDER_ALL_ID,
@@ -147,7 +148,55 @@ const applyFetchErrorNotes = (state, action) => ({
   active: null
 });
 
-function noteReducer(state = INITIAL_STATE, action) {
+const findWithRegex = (regex, text, callback) => {
+  let matchArr = regex.exec(text);
+  let start;
+
+  if (matchArr !== null) {
+    start = matchArr.index;
+    return {
+      start,
+      end: start + matchArr[0].length  
+    }
+  } else {
+    return null;
+  }
+
+
+
+};
+
+const applyShowNotesOnSearch = (state, action) => {
+  const regex = new RegExp(action.term, 'g');
+
+  let searched = state.notes.filter(note => {
+    let blocks = JSON.parse(note.text).blocks;
+    let position;
+
+    let foundBlock = blocks.find(block => {
+      if ((position = findWithRegex(regex, block.text))) {
+        return true;
+      }
+
+      return false;
+    });
+
+    if (foundBlock) {
+      note.search = { position, text: foundBlock.text };
+      return true;
+    }
+
+    return false;
+  });
+
+  return {
+    ...state,
+    searched
+  }
+
+}
+
+const noteReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case NOTE_NEW: {
       return applyNewNote(state, action);
@@ -172,6 +221,9 @@ function noteReducer(state = INITIAL_STATE, action) {
     }
     case NOTE_REMOVE_ACTIVE: {
       return applyRemoveActiveNote(state, action);
+    }
+    case NOTES_ON_SEARCH: {
+      return applyShowNotesOnSearch(state, action);
     }
     case NOTES_FETCH_ERROR: {
       return applyFetchErrorNotes(state, action);

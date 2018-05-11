@@ -8,7 +8,8 @@ import {
   NOTE_SELECT,
   NOTE_DESELECT,
   NOTE_REMOVE_ACTIVE,
-  EDITOR_LOAD
+  EDITOR_LOAD,
+  SEARCH_NOTES_RESET,
 } from '../constants/actionTypes';
 import { getNextActiveNote } from '../selectors/note';
 
@@ -40,6 +41,10 @@ const doDeleteFolder = folder => ({
 const doSelectFolder = (folder) =>
   (dispatch, getState) => {
     const activeFolder = getState().folderState.active;
+
+    dispatch({
+      type: SEARCH_NOTES_RESET
+    });
 
     dispatch({
       type: FOLDER_SELECT,
