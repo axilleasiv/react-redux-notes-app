@@ -29,7 +29,18 @@ const getNotes = ({ noteState, folderState, toolsState }) => {
   }
 }
 
-const getActiveNote = ({ noteState }) => noteState.active;
+// const getActiveNote = ({ noteState }) => noteState.active;
+const getActiveNote = ({ noteState }) => {
+  const active = noteState.active;
+
+  if (active && active.length < 2) {
+    return noteState.notes.find(note => {
+      return note.id === noteState.active[0];
+    });
+  } else {
+    return null;
+  }
+}
 
 const getNextActiveNote = ({ noteState, folderState, toolsState }) => {
   let notes = getNotes({ noteState, folderState, toolsState });
@@ -41,12 +52,16 @@ const checkIfCanAddNewNote = ({ noteState, folderState }) => {
      folderState.active.id === defaultFolders.FOLDER_DELETED_ID);
 };
 
-const checkIfCanDelete = ({ folderState }) => {
+const checkIfCanDelete = ({ noteState, folderState, toolsState }) => {
   if (folderState.active.selected) {
     return !Object.values(defaultFolders).includes(folderState.active.id);
   }
 
-  return true;
+  if (getNextActiveNote({ noteState, folderState, toolsState })) {
+    return true;
+  }
+
+  return false;
 };
 
 const getFetchError = ({ noteState }) => noteState.error;

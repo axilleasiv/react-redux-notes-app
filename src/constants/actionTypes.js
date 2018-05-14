@@ -32,3 +32,5 @@ export const EDITOR_LOAD = "EDITOR_LOAD";
 export const EDITOR_UPDATE = "EDITOR_UPDATE";
 export const EDITOR_SEARCH = "EDITOR_SEARCH";
 export const EDITOR_REPLACE = "EDITOR_REPLACE";
+
+export const KEY_TOGGLE = "KEY_TOGGLE";

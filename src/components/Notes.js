@@ -1,13 +1,13 @@
 import React from 'react';
 import Note from './Note'
 import { connect } from 'react-redux';
-import { getNotes, getActiveNote } from '../selectors/note';
+import { getNotes } from '../selectors/note';
 
 const getUiState = (note, active) => {
-  if (note.id === (active && active.id)) {
-    if (active.selected) {
+  if (active) {
+    if (note.selected) {
       return 'selected';
-    } else {
+    } else if(active.includes(note.id)) {
       return 'active';
     }
   }
@@ -27,7 +27,7 @@ const Notes = ({ notes, active }) => (
 
 const mapStateToProps = state => ({
   notes: getNotes(state),
-  active: getActiveNote(state)
+  active: state.noteState.active
 });
 
 //TODO dispatch on mount for notes and active note

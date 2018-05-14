@@ -6,6 +6,7 @@ import {
   SEARCH_TOGGLE_REPLACE,
   SEARCH_NOTES,
   SEARCH_NOTES_RESET,
+  KEY_TOGGLE,
 } from '../constants/actionTypes';
 
 const INITIAL_STATE = {
@@ -17,6 +18,9 @@ const INITIAL_STATE = {
   },
   searchNotes: {
     search: ''
+  },
+  keys: {
+    shift: false
   }
 };
 
@@ -85,8 +89,21 @@ const applySearchNotesReset = (state, action) => {
   };
 };
 
+const applyToggleKey = (state, action) => {
+  return {
+    ...state,
+    keys: {
+      ...state.keys,
+      [action.name]: action.value
+    }
+  }
+}
+
 const searchReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case KEY_TOGGLE: {
+      return applyToggleKey(state, action);
+    }
     case SEARCH_DOC_ENABLE:
     case SEARCH_DOC_DISABLE: {
       return applyTriggerSearchDoc(state, action);

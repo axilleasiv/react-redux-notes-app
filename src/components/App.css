@@ -1,3 +1,7 @@
 :local(.app) {
   text-align: left;
 }
+
+div[tabindex="-1"]:focus {
+    outline: 0;
+}

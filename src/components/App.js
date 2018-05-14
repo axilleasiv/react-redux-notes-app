@@ -9,16 +9,29 @@ import MainPanel from './MainPanel';
 import SearchBar from './SearchBar';
 import Editor from './Editor';
 import style from './App.css';
-import { doEnableDocSearch, doDisableDocSearch } from '../actions/tools';
+import { doEnableDocSearch, doDisableDocSearch, doToggleKey } from '../actions/tools';
 import { doSaveFolder } from '../actions/folder';
+import { doNewNote } from '../actions/note';
 
 const keyMap = {
   showSearch: [`command+f`, `ctrl+f`],
+  newNote: [`command+n`, `ctrl+n`],
   dismiss: 'escape',
-  onEnter: 'enter'
+  onEnter: 'enter',
+  onShiftDown: { sequence: 'shift', action: 'keydown'},
+  onShiftUp: { sequence: 'shift', action: 'keyup'},
 };
 //stateless?
 class App extends Component {
+  onBlur(e) {
+    var currentTarget = e.currentTarget;
+
+    setTimeout(function () {
+      if (!currentTarget.contains(document.activeElement)) {
+        console.log('component officially blurred');
+      }
+    }, 0);
+  }
   render() {
     const {
       searchDocEnabled,
@@ -26,7 +39,8 @@ class App extends Component {
     } = this.props;
 
     return <HotKeys keyMap={keyMap} handlers={handlers}>
-        <div className={style.app}>
+      {/* <div className={style.app} tabIndex="0" onBlur={this.onBlur}> */}
+      <div className={style.app}>
           <TopBar />
           <FolderSideBar />
           <SideBar />
@@ -56,10 +70,22 @@ const mapDispatchToProps = dispatch => ({
     },
 
     onEnter: (e) => {
-      console.log(e.target);
       if (e.target.id === 'folderNew') {
         dispatch(doSaveFolder(e.target.value));
       }
+    },
+
+    newNote: (e) => {
+      e.preventDefault();
+      dispatch(doNewNote());
+    },
+    //TODO on blur or visibility change shift remains true, so reset keys
+    onShiftDown: (e) => {
+      dispatch(doToggleKey({name: 'shift', value:true}));
+    },
+
+    onShiftUp: (e) => {
+      dispatch(doToggleKey({name: 'shift', value:false}));
     }
   }
 });

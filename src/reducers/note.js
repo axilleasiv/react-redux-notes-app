@@ -25,14 +25,29 @@ const applyAddNotes = (state, action) => ({
 });
 
 const isNotNewNote = note => note.title !== '';
-const applySelectNote = (state, action) => ({
-  ...state,
-  notes: state.notes.filter(isNotNewNote),
-  active: action.note ? {
-    ...action.note,
-    selected: action.selected
-  } : null
-});
+const applySelectNote = (state, action) => {
+
+  let active;
+  if (!action.note) {
+    active = null;
+  } else if (action.multiSelect){
+    active = [...state.active, action.note.id];
+  } else {
+    active = [action.note.id]
+  }
+
+  return {
+    ...state,
+    //TODO use if else without assign
+    notes: action.note ? state.notes.filter(isNotNewNote).map(note => {
+      return {
+        ...note,
+        selected: active.includes(note.id) ? action.selected : false
+      }
+    }) : state.notes,
+    active: action.note ? active : null
+  };
+};
 
 const applyRemoveActiveNote = (state, action) => ({
   ...state,
@@ -42,10 +57,11 @@ const applyRemoveActiveNote = (state, action) => ({
 
 const applyDeSelectNote = (state, action) => ({
   ...state,
-  active: {
-    ...state.active,
-    selected: false
-  }
+  notes: state.notes.map(note => {
+    
+    note.selected = false;
+    return note;
+  })
 });
 
 const applyNewNote = (state, action) => {
@@ -62,29 +78,31 @@ const applyNewNote = (state, action) => {
   return {
     ...state,
     notes: [note, ...state.notes],    
-    active: note
+    active: [note.id]
   }
 }
 
-const isNotDeleted = item => item.folderId !== FOLDER_DELETED_ID;
+const getNoteById = (notes, id) => notes.find(note => note.id === id);
 const belongsToFolder = folderId => item => item.folderId === folderId;
 
-const findNextActiveOnRemove = (list, active) => {
-  const nextActive = list.filter(isNotDeleted)
-                          .find(belongsToFolder(active.folderId))
+const findNextActiveOnRemove = (list, folderId) => {
+  const nextActive = list.find(belongsToFolder(folderId));
 
-  return Object.assign({}, nextActive);
+  return nextActive ? nextActive.id : null;
 };
 
 const applyDeleteNote = (state, action) => {
-  const active = state.active;
+  let active = getNoteById(state.notes, state.active[0]);
   let notes;
+  let folderId = active.folderId;
+  let searched = [];
+  let nextActiveId;
 
-  if (state.newNote) {
-    notes = state.notes.filter(note => note.id !== active.id);
+  if (folderId === FOLDER_DELETED_ID) {
+    notes = state.notes.filter(note => !state.active.includes(note.id));
   } else {
-    notes = state.notes.map((note, index) => {
-      if (note.id === active.id) {
+    notes = state.notes.map((note) => {
+      if (state.active.includes(note.id)) {
         return { ...note, folderId: FOLDER_DELETED_ID, belonged: note.folderId };
       } else {
         return note;
@@ -92,10 +110,18 @@ const applyDeleteNote = (state, action) => {
     });
   }
 
+  if (action.onSearch) {
+    searched = state.searched.filter(note => !state.active.includes(note.id));
+    nextActiveId = searched[0] ? searched[0].id : null;
+  } else {
+    nextActiveId = findNextActiveOnRemove(notes, folderId);
+  }
+
   return  {
     ...state,
-    active: findNextActiveOnRemove(notes, active),
+    active: nextActiveId ? [nextActiveId] : null,
     notes,
+    searched,
   };
 }
 
@@ -116,7 +142,7 @@ const applyDeleteFromFolder = (state, action) => {
 };
 
 const applyChangeNote = (state, action) => {
-  const active = state.active;
+  const active = getNoteById(state.notes, state.active[0]);
 
   //TODO use this somewhere else
   if (action.text === active.text) {
@@ -131,13 +157,6 @@ const applyChangeNote = (state, action) => {
 
   return  {
     ...state,
-    active: {
-      ...active,
-      text: action.text,
-      title: action.title,
-      subtitle: action.subtitle,
-      editedAt: action.date
-    },
     notes
   };
 }

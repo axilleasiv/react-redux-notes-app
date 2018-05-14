@@ -10,6 +10,7 @@ import {
   EDITOR_LOAD,
   NOTE_SELECT,
   NOTES_ON_SEARCH,
+  KEY_TOGGLE,
 } from '../constants/actionTypes';
 import { getNextActiveNote } from '../selectors/note';
 
@@ -79,6 +80,12 @@ const doSearchNotes = term =>
     }
 
   }
+
+const doToggleKey = ({name, value}) => ({
+  type: KEY_TOGGLE,
+  name,
+  value
+});
   
 
 export {
@@ -88,5 +95,6 @@ export {
   doToggleReplace,
   doEnableDocSearch,
   doDisableDocSearch,
-  doSearchNotes
+  doSearchNotes,
+  doToggleKey
 };

@@ -19,6 +19,10 @@ const doNewFolder = folder => dispatch => {
   });
 
   dispatch({
+    type: SEARCH_NOTES_RESET
+  });
+
+  dispatch({
     type: FOLDER_NEW,
     id: uuidv4()
   });

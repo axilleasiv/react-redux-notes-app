@@ -15,7 +15,7 @@ import {
   EDITOR_LOAD,
   EDITOR_NEW
 } from "../constants/actionTypes";
-import { getNextActiveNote } from '../selectors/note';
+import { getNextActiveNote, getActiveNote } from '../selectors/note';
 
 const doNewNote = () =>
   (dispatch, getState) => {
@@ -59,7 +59,8 @@ const doDeleteNote = () =>
     } else {
       
       dispatch({
-        type: NOTE_DELETE
+        type: NOTE_DELETE,
+        onSearch: getState().toolsState.searchNotes.search
       });
 
       const note = getNextActiveNote(getState());
@@ -75,17 +76,23 @@ const doDeleteNote = () =>
   }
 
 const doSelectNote = note =>
-  (dispatch) => {
+  (dispatch, getState) => {
+
     dispatch({
       type: NOTE_SELECT,
       note,
-      selected: true
-    })
+      selected: true,
+      multiSelect: getState().toolsState.keys.shift
+    });
 
-    dispatch({
-      type: EDITOR_LOAD,
-      note
-    })
+    const active = getActiveNote(getState());
+
+    if (active) {
+      dispatch({ 
+        type: EDITOR_LOAD,
+        note: active
+      });
+    }
 
     dispatch({
       type: FOLDER_DESELECT
