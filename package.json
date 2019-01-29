@@ -7,17 +7,18 @@
     "@fortawesome/fontawesome-free-regular": "^5.0.6",
     "@fortawesome/fontawesome-free-solid": "^5.0.6",
     "@fortawesome/react-fontawesome": "0.0.17",
+    "codemirror": "^5.37.0",
     "draft-js": "^0.10.5",
-    "draft-js-emoji-plugin": "^2.0.6",
+    "draft-js-emoji-plugin": "^2.1.1",
     "draft-js-linkify-plugin": "^2.0.1",
-    "draft-js-plugins-editor": "^2.0.8",
+    "draft-js-plugins-editor": "^2.1.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-hotkeys": "^1.1.4",
     "react-redux": "^5.0.7",
     "react-scripts": "1.1.1",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0",
+    "redux-thunk": "^2.3.0",
     "uuid": "^3.2.1"
   },
   "scripts": {
@@ -28,6 +29,16 @@
   },
   "devDependencies": {
     "deep-freeze": "0.0.1",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "husky": "^1.3.1",
+    "prettier": "^1.16.0",
+    "pretty-quick": "^1.10.0",
     "redux-logger": "^3.0.6"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   }
 }
