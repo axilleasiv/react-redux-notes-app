@@ -6,7 +6,7 @@ import {
   SEARCH_TOGGLE_REPLACE,
   SEARCH_NOTES,
   SEARCH_NOTES_RESET,
-  KEY_TOGGLE,
+  KEY_TOGGLE
 } from '../constants/actionTypes';
 
 const INITIAL_STATE = {
@@ -36,8 +36,8 @@ const applyTriggerSearchDoc = (state, action) => {
       ...state.searchDoc,
       enabled
     }
-  }
-}
+  };
+};
 
 const applyNewSearch = (state, action) => {
   return {
@@ -46,7 +46,7 @@ const applyNewSearch = (state, action) => {
       ...state.searchDoc,
       search: action.term
     }
-  }
+  };
 };
 
 const applyUpdateReplace = (state, action) => {
@@ -64,7 +64,7 @@ const applyToggleReplace = (state, action) => {
     ...state,
     searchDoc: {
       ...state.searchDoc,
-      replaceEnabled: !state.replaceEnabled
+      replaceEnabled: !state.searchDoc.replaceEnabled
     }
   };
 };
@@ -77,8 +77,7 @@ const applyChangeSearchNotes = (state, action) => {
       search: action.term
     }
   };
-}
-;
+};
 const applySearchNotesReset = (state, action) => {
   return {
     ...state,
@@ -96,8 +95,8 @@ const applyToggleKey = (state, action) => {
       ...state.keys,
       [action.name]: action.value
     }
-  }
-}
+  };
+};
 
 const searchReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -126,6 +125,6 @@ const searchReducer = (state = INITIAL_STATE, action) => {
     default:
       return state;
   }
-}
+};
 
 export default searchReducer;
