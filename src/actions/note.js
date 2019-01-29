@@ -14,111 +14,105 @@ import {
   NOTE_DESELECT,
   EDITOR_LOAD,
   EDITOR_NEW
-} from "../constants/actionTypes";
+} from '../constants/actionTypes';
 import { getNextActiveNote, getActiveNote } from '../selectors/note';
 
-const doNewNote = () =>
-  (dispatch, getState) => {
+const doNewNote = () => (dispatch, getState) => {
+  dispatch({
+    type: NOTE_NEW,
+    id: uuidv4(),
+    date: new Date().getTime(),
+    folderId: getState().folderState.active.id
+  });
+
+  dispatch({
+    type: EDITOR_NEW
+  });
+};
+
+const doDeleteNote = () => (dispatch, getState) => {
+  const activeFolder = getState().folderState.active;
+
+  if (activeFolder.selected) {
     dispatch({
-      type: NOTE_NEW,
-      id: uuidv4(),
-      date: new Date().getTime(),
-      folderId: getState().folderState.active.id
-    })
-
+      type: FOLDER_DELETE
+    });
     dispatch({
-      type: EDITOR_NEW
-    })
-  }
-
-const doDeleteNote = () =>
-  (dispatch, getState) => {
-    const activeFolder = getState().folderState.active;
-
-    if (activeFolder.selected) {
-      dispatch({
-        type: FOLDER_DELETE
-      });
-      dispatch({
-        type: NOTES_DELETE_FROM_FOLDER,
-        folderId: activeFolder.id
-      });
-      const note = getNextActiveNote(getState());
-      dispatch({
-        type: NOTE_SELECT,
-        note,
-        selected: false
-      });
-
-      if (note && note.text) {
-        dispatch({
-          type: EDITOR_LOAD,
-          note
-        });
-      }
-    } else {
-      
-      dispatch({
-        type: NOTE_DELETE,
-        onSearch: getState().toolsState.searchNotes.search
-      });
-
-      const note = getNextActiveNote(getState());
-      
-      if (note && note.text) {
-        dispatch({
-          type: EDITOR_LOAD,
-          note
-        });
-      }
-
-    }
-  }
-
-const doSelectNote = note =>
-  (dispatch, getState) => {
-
+      type: NOTES_DELETE_FROM_FOLDER,
+      folderId: activeFolder.id
+    });
+    const note = getNextActiveNote(getState());
     dispatch({
       type: NOTE_SELECT,
       note,
-      selected: true,
-      multiSelect: getState().toolsState.keys.shift
+      selected: false
     });
 
-    const active = getActiveNote(getState());
-
-    if (active) {
-      dispatch({ 
+    if (note && note.text) {
+      dispatch({
         type: EDITOR_LOAD,
-        note: active
+        note
       });
     }
-
+  } else {
     dispatch({
-      type: FOLDER_DESELECT
-    })
-  }
-
-const doDeselect = note =>
-  (dispatch) => {
-    dispatch({
-      type: NOTE_DESELECT,
+      type: NOTE_DELETE,
+      activeFolderId: activeFolder.id,
+      onSearch: getState().toolsState.searchNotes.search
     });
-    dispatch({
-      type: FOLDER_DESELECT
-    })
+
+    const note = getNextActiveNote(getState());
+
+    if (note && note.text) {
+      dispatch({
+        type: EDITOR_LOAD,
+        note
+      });
+    }
   }
+};
+
+const doSelectNote = note => (dispatch, getState) => {
+  dispatch({
+    type: NOTE_SELECT,
+    note,
+    selected: true,
+    multiSelect: getState().toolsState.keys.shift
+  });
+
+  const active = getActiveNote(getState());
+
+  if (active) {
+    dispatch({
+      type: EDITOR_LOAD,
+      note: active
+    });
+  }
+
+  dispatch({
+    type: FOLDER_DESELECT
+  });
+};
+
+const doDeselect = note => dispatch => {
+  dispatch({
+    type: NOTE_DESELECT
+  });
+  dispatch({
+    type: FOLDER_DESELECT
+  });
+};
 
 //maybe to move on Editor action
 //or use a general action for doChangeNote(note)
 const doChangeNote = (text, title, subtitle) => {
-  return ({
+  return {
     type: NOTE_CHANGE,
     date: new Date().getTime(),
     text,
     title,
     subtitle
-  })
+  };
 };
 
 const doRemoveActive = () => ({
