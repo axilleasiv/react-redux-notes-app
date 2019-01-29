@@ -1,5 +1,5 @@
 import React from 'react';
-import Folder from './Folder'
+import Folder from './Folder';
 import { connect } from 'react-redux';
 import { getFolders, getActiveFolder } from '../selectors/folder';
 import { doNewFolder } from '../actions/folder';
@@ -9,15 +9,15 @@ import style from './Folders.css';
 
 const getUiState = (folder, active) => {
   if (folder.id === (active && active.id)) {
-      if (active.selected) {
-        return 'selected';
-      } else {
-        return 'active';
-      }
+    if (active.selected) {
+      return 'selected';
+    } else {
+      return 'active';
+    }
   }
 
   return 'folder';
-}
+};
 
 const Folders = ({ folders, active, onClick }) => (
   <div>
@@ -45,7 +45,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onClick: () => dispatch(doNewFolder()),
+  onClick: () => dispatch(doNewFolder())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Folders);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Folders);

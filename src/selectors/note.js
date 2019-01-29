@@ -5,7 +5,7 @@ import * as defaultFolders from '../constants/folders';
 
 const belongOnCurrentFolter = folder => note => {
   return note.folderId === folder.id;
-}
+};
 
 const isNotDeleted = note => {
   return note.folderId !== defaultFolders.FOLDER_DELETED_ID;
@@ -21,13 +21,13 @@ const getNotes = ({ noteState, folderState, toolsState }) => {
   }
 
   if (folder.id === defaultFolders.FOLDER_ALL_ID) {
-    return noteState.notes.filter(isNotDeleted)
-                          .sort(mostRecent);
+    return noteState.notes.filter(isNotDeleted).sort(mostRecent);
   } else {
-    return noteState.notes.filter(belongOnCurrentFolter(folder))
-                          .sort(mostRecent)
+    return noteState.notes
+      .filter(belongOnCurrentFolter(folder))
+      .sort(mostRecent);
   }
-}
+};
 
 // const getActiveNote = ({ noteState }) => noteState.active;
 const getActiveNote = ({ noteState }) => {
@@ -40,7 +40,7 @@ const getActiveNote = ({ noteState }) => {
   } else {
     return null;
   }
-}
+};
 
 const getNextActiveNote = ({ noteState, folderState, toolsState }) => {
   let notes = getNotes({ noteState, folderState, toolsState });
@@ -48,8 +48,10 @@ const getNextActiveNote = ({ noteState, folderState, toolsState }) => {
 };
 
 const checkIfCanAddNewNote = ({ noteState, folderState }) => {
-  return !((noteState.active && noteState.active.title === '') ||
-     folderState.active.id === defaultFolders.FOLDER_DELETED_ID);
+  return !(
+    (noteState.active && noteState.active.title === '') ||
+    folderState.active.id === defaultFolders.FOLDER_DELETED_ID
+  );
 };
 
 const checkIfCanDelete = ({ noteState, folderState, toolsState }) => {
@@ -73,5 +75,5 @@ export {
   getFetchError,
   checkIfCanAddNewNote,
   checkIfCanDelete,
-  isNotDeleted,
+  isNotDeleted
 };

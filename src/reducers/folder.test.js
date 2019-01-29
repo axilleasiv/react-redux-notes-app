@@ -1,28 +1,32 @@
-import { FOLDER_NEW, FOLDER_SELECT, FOLDER_SAVE } from '../constants/actionTypes';
+import {
+  FOLDER_NEW,
+  FOLDER_SELECT,
+  FOLDER_SAVE
+} from '../constants/actionTypes';
 import folder from './folder';
 import deepFreeze from 'deep-freeze';
 
 describe('folder reducer', () => {
   const stateBefore = {
     folders: [
-      {id: 1,name: 'All'},
-      {id: 2,name: 'Notes'},
-      {id: 3,name: 'Recently Deleted'},
-      {id: 4,name: 'My folder'},
+      { id: 1, name: 'All' },
+      { id: 2, name: 'Notes' },
+      { id: 3, name: 'Recently Deleted' },
+      { id: 4, name: 'My folder' }
     ],
 
-    active: {id: 2,name: 'All'}
+    active: { id: 2, name: 'All' }
   };
 
   it('select folder', () => {
     const stateAfter = {
       folders: [
-        {id: 1, name: 'All'},
-        {id: 2, name: 'Notes'},
-        {id: 3,name: 'Recently Deleted'},
-        {id: 4,name: 'My folder'},
+        { id: 1, name: 'All' },
+        { id: 2, name: 'Notes' },
+        { id: 3, name: 'Recently Deleted' },
+        { id: 4, name: 'My folder' }
       ],
-      active: {id: 3,name: 'Recently Deleted',selected: true}
+      active: { id: 3, name: 'Recently Deleted', selected: true }
     };
     const action = {
       type: FOLDER_SELECT,
@@ -41,13 +45,13 @@ describe('folder reducer', () => {
   it('Add new folder', () => {
     const stateAfter = {
       folders: [
-        {id: 1, name: 'All'},
-        {id: 2, name: 'Notes'},
-        {id: 3, name: 'Recently Deleted'},
-        {id: 4,name: 'My folder'},
-        {id: 19, name: 'New Folder', new: true}
+        { id: 1, name: 'All' },
+        { id: 2, name: 'Notes' },
+        { id: 3, name: 'Recently Deleted' },
+        { id: 4, name: 'My folder' },
+        { id: 19, name: 'New Folder', new: true }
       ],
-      active: {id: 19,name: 'New Folder',new: true, selected: true}
+      active: { id: 19, name: 'New Folder', new: true, selected: true }
     };
     const action = {
       type: FOLDER_NEW,
@@ -63,24 +67,24 @@ describe('folder reducer', () => {
   it('save folder', () => {
     const stateBeforeSave = {
       folders: [
-        {id: 1,name: 'All'},
-        {id: 2,name: 'Notes'},
-        {id: 3,name: 'Recently Deleted'},
-        {id: 4,name: 'My folder'},
-        {id: 19, name: 'New Folder', new: true}
+        { id: 1, name: 'All' },
+        { id: 2, name: 'Notes' },
+        { id: 3, name: 'Recently Deleted' },
+        { id: 4, name: 'My folder' },
+        { id: 19, name: 'New Folder', new: true }
       ],
 
-      active: {id: 19, name: 'New Folder', new: true}
+      active: { id: 19, name: 'New Folder', new: true }
     };
     const stateAfter = {
       folders: [
-        {id: 1, name: 'All'},
-        {id: 2, name: 'Notes'},
-        {id: 3, name: 'Recently Deleted'},
-        {id: 4,name: 'My folder'},
-        {id: 19, name: 'One more folder'}
+        { id: 1, name: 'All' },
+        { id: 2, name: 'Notes' },
+        { id: 3, name: 'Recently Deleted' },
+        { id: 4, name: 'My folder' },
+        { id: 19, name: 'One more folder' }
       ],
-      active: {id: 19, name: 'One more folder', selected: true}
+      active: { id: 19, name: 'One more folder', selected: true }
     };
     const action = {
       type: FOLDER_SAVE,
@@ -96,23 +100,23 @@ describe('folder reducer', () => {
   it('trying to save folder without no name', () => {
     const stateBeforeSave = {
       folders: [
-        {id: 1,name: 'All'},
-        {id: 2,name: 'Notes'},
-        {id: 3,name: 'Recently Deleted'},
-        {id: 4,name: 'My folder'},
-        {id: 19, name: 'New Folder', new: true}
+        { id: 1, name: 'All' },
+        { id: 2, name: 'Notes' },
+        { id: 3, name: 'Recently Deleted' },
+        { id: 4, name: 'My folder' },
+        { id: 19, name: 'New Folder', new: true }
       ],
 
-      active: {id: 19, name: 'New Folder', new: true}
+      active: { id: 19, name: 'New Folder', new: true }
     };
     const stateAfter = {
       folders: [
-        {id: 1, name: 'All'},
-        {id: 2, name: 'Notes'},
-        {id: 3, name: 'Recently Deleted'},
-        {id: 4,name: 'My folder'},
+        { id: 1, name: 'All' },
+        { id: 2, name: 'Notes' },
+        { id: 3, name: 'Recently Deleted' },
+        { id: 4, name: 'My folder' }
       ],
-      active: {id: 4,name: 'My folder', selected: true},
+      active: { id: 4, name: 'My folder', selected: true }
     };
     const action = {
       type: FOLDER_SAVE,

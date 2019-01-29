@@ -2,7 +2,7 @@ import {
   NOTE_NEW,
   NOTE_SELECT,
   NOTE_CHANGE_TEXT,
-  NOTE_DELETE,
+  NOTE_DELETE
 } from '../constants/actionTypes';
 import note from './note';
 import deepFreeze from 'deep-freeze';
@@ -11,12 +11,12 @@ describe('note reducer', () => {
   const stateBefore = {
     notes: [
       {
-          belongs: 2,
-          createdAt: 1524488625496,
-          editedAt: 1524488625496,
-          id: 2,
-          title: 'This is one more title',
-          text: 'This is the text',
+        belongs: 2,
+        createdAt: 1524488625496,
+        editedAt: 1524488625496,
+        id: 2,
+        title: 'This is one more title',
+        text: 'This is the text'
       },
       {
         id: 1,
@@ -24,16 +24,16 @@ describe('note reducer', () => {
         text: 'This is the text',
         createdAt: 1518909135895,
         editedAt: 1518909135895,
-        belongs: 2,
+        belongs: 2
       }
     ],
     active: {
-        id: 1,
-        title: 'This is a title',
-        text: 'This is the text',
-        createdAt: 1518909135895,
-        editedAt: 1518909135895,
-        belongs: 2,
+      id: 1,
+      title: 'This is a title',
+      text: 'This is the text',
+      createdAt: 1518909135895,
+      editedAt: 1518909135895,
+      belongs: 2
     },
     error: null,
     newNote: false
@@ -48,7 +48,7 @@ describe('note reducer', () => {
           editedAt: 1524488625496,
           id: 3,
           text: '',
-          title: '',
+          title: ''
         },
         {
           belongs: 2,
@@ -56,7 +56,7 @@ describe('note reducer', () => {
           editedAt: 1524488625496,
           id: 2,
           title: 'This is one more title',
-          text: 'This is the text',
+          text: 'This is the text'
         },
         {
           id: 1,
@@ -64,7 +64,7 @@ describe('note reducer', () => {
           text: 'This is the text',
           createdAt: 1518909135895,
           editedAt: 1518909135895,
-          belongs: 2,
+          belongs: 2
         }
       ],
       active: {
@@ -73,7 +73,7 @@ describe('note reducer', () => {
         title: '',
         text: '',
         createdAt: 1524488625496,
-        editedAt: 1524488625496,
+        editedAt: 1524488625496
       },
       error: null,
       newNote: true
@@ -101,7 +101,7 @@ describe('note reducer', () => {
           editedAt: 1524488625496,
           id: 2,
           title: 'This is one more title',
-          text: 'This is the text',
+          text: 'This is the text'
         },
         {
           id: 1,
@@ -109,7 +109,7 @@ describe('note reducer', () => {
           text: 'This is the text',
           createdAt: 1518909135895,
           editedAt: 1518909135895,
-          belongs: 2,
+          belongs: 2
         }
       ],
       active: {
@@ -127,12 +127,12 @@ describe('note reducer', () => {
     const action = {
       type: NOTE_SELECT,
       note: {
-          belongs: 2,
-          createdAt: 1524488625496,
-          editedAt: 1524488625496,
-          id: 2,
-          title: 'This is one more title',
-          text: 'This is the text',
+        belongs: 2,
+        createdAt: 1524488625496,
+        editedAt: 1524488625496,
+        id: 2,
+        title: 'This is one more title',
+        text: 'This is the text'
       },
       selected: true
     };
@@ -147,12 +147,12 @@ describe('note reducer', () => {
     const stateAfter = {
       notes: [
         {
-            belongs: 2,
-            createdAt: 1524488625496,
-            editedAt: 1524488625496,
-            id: 2,
-            title: 'This is one more title',
-            text: 'This is the text',
+          belongs: 2,
+          createdAt: 1524488625496,
+          editedAt: 1524488625496,
+          id: 2,
+          title: 'This is one more title',
+          text: 'This is the text'
         },
         {
           id: 1,
@@ -160,16 +160,16 @@ describe('note reducer', () => {
           text: 'I am editing the text',
           createdAt: 1518909135895,
           editedAt: 1524492310218,
-          belongs: 2,
+          belongs: 2
         }
       ],
       active: {
-          id: 1,
-          title: 'This is a title',
-          text: 'I am editing the text',
-          createdAt: 1518909135895,
-          editedAt: 1524492310218,
-          belongs: 2,
+        id: 1,
+        title: 'This is a title',
+        text: 'I am editing the text',
+        createdAt: 1518909135895,
+        editedAt: 1524492310218,
+        belongs: 2
       },
       error: null,
       newNote: false
@@ -195,7 +195,7 @@ describe('note reducer', () => {
           editedAt: 1524488625496,
           id: 2,
           title: 'This is one more title',
-          text: 'This is the text',
+          text: 'This is the text'
         },
         {
           id: 1,
@@ -204,22 +204,22 @@ describe('note reducer', () => {
           createdAt: 1518909135895,
           editedAt: 1518909135895,
           belongs: 3,
-          belonged: 2,
+          belonged: 2
         }
       ],
       active: {
-          belongs: 2,
-          createdAt: 1524488625496,
-          editedAt: 1524488625496,
-          id: 2,
-          title: 'This is one more title',
-          text: 'This is the text',
+        belongs: 2,
+        createdAt: 1524488625496,
+        editedAt: 1524488625496,
+        id: 2,
+        title: 'This is one more title',
+        text: 'This is the text'
       },
       error: null,
       newNote: false
     };
     const action = {
-      type: NOTE_DELETE,
+      type: NOTE_DELETE
     };
 
     deepFreeze(stateBefore);
@@ -227,6 +227,4 @@ describe('note reducer', () => {
 
     expect(note(stateBefore, action)).toEqual(stateAfter);
   });
-
-
 });

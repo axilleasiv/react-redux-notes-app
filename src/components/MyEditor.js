@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  RichUtils,
-  getDefaultKeyBinding,
-  KeyBindingUtil,
-} from 'draft-js';
+import { RichUtils, getDefaultKeyBinding, KeyBindingUtil } from 'draft-js';
 import Editor from 'draft-js-plugins-editor';
 import createLinkifyPlugin from 'draft-js-linkify-plugin';
 import { doDeselect } from '../actions/note';
-import { isNotDeleted } from '../selectors/note'
+import { isNotDeleted } from '../selectors/note';
 import { doUpdateEditor, doLoadEditor } from '../actions/editor';
 import 'draft-js/dist/Draft.css';
 import 'draft-js-linkify-plugin/lib/plugin.css';
@@ -16,7 +12,6 @@ import 'draft-js-linkify-plugin/lib/plugin.css';
 const { hasCommandModifier } = KeyBindingUtil;
 const linkifyPlugin = createLinkifyPlugin({ target: '_blank' });
 const plugins = [linkifyPlugin];
-
 
 class MyEditor extends Component {
   constructor(props) {
@@ -113,12 +108,15 @@ const mapDispatchToProps = dispatch => ({
   onLoad: (editorState, note) => {
     dispatch(doLoadEditor(editorState, note));
   },
-  onChange: (content) => {
-    dispatch(doUpdateEditor(content))
+  onChange: content => {
+    dispatch(doUpdateEditor(content));
   },
   onFocus: () => dispatch(doDeselect())
 });
 
 const mapStateToProps = ({ editorState }) => ({ editorState });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyEditor);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MyEditor);

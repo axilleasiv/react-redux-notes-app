@@ -50,5 +50,4 @@ class DateWidget extends Component {
   }
 }
 
-
 export default DateWidget;

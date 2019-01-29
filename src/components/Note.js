@@ -21,32 +21,22 @@ const getTitle = text => {
 const getSubTitle = text => {
   const MSG = 'No Additional text';
 
-  
   if (text === '') {
     return MSG;
-  } 
-  
+  }
+
   return text.substr(0, 25);
 };
 
 const formatSearch = search => {
-
   return search.text.substr(0, 25);
 };
 
-const Note = ({note, className, onSelect}) => {
-  const {
-    createdAt,
-    title,
-    subtitle,
-    search
-  } = note;
+const Note = ({ note, className, onSelect }) => {
+  const { createdAt, title, subtitle, search } = note;
 
   return (
-    <div 
-      className={style[className]}
-      onClick={() => onSelect(note)}
-    >
+    <div className={style[className]} onClick={() => onSelect(note)}>
       <p className={style.title}>{getTitle(title)}</p>
       <p className={style.subtitle}>
         <span className={style.date}>{getDate(createdAt)}</span>
@@ -54,14 +44,13 @@ const Note = ({note, className, onSelect}) => {
       </p>
     </div>
   );
-}
+};
 
 const mapDispatchToProps = dispatch => ({
-  onSelect: note => dispatch(doSelectNote(note)),
+  onSelect: note => dispatch(doSelectNote(note))
 });
 
 export default connect(
   null,
   mapDispatchToProps
 )(Note);
-  

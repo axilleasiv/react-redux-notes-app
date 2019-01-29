@@ -8,7 +8,14 @@ import { checkIfCanAddNewNote, checkIfCanDelete } from '../selectors/note';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/fontawesome-free-solid';
 
-const TopBar = ({ cannotAddNote, cannotDelete, onClickNew, onClickDel, search, onChangeSearch }) => (
+const TopBar = ({
+  cannotAddNote,
+  cannotDelete,
+  onClickNew,
+  onClickDel,
+  search,
+  onChangeSearch
+}) => (
   <header className={style.header}>
     <Button
       className={style.button}
@@ -49,4 +56,7 @@ const mapDispatchToProps = dispatch => ({
   onChangeSearch: ({ target }) => dispatch(doSearchNotes(target.value))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TopBar);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TopBar);

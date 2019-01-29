@@ -1,5 +1,5 @@
 import React from 'react';
-import Note from './Note'
+import Note from './Note';
 import { connect } from 'react-redux';
 import { getNotes } from '../selectors/note';
 
@@ -7,7 +7,7 @@ const getUiState = (note, active) => {
   if (active) {
     if (note.selected) {
       return 'selected';
-    } else if(active.includes(note.id)) {
+    } else if (active.includes(note.id)) {
       return 'active';
     }
   }

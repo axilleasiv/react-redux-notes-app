@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
   archiveState: archiveReducer,
   folderState: folderReducer,
   editorState: editorReducer,
-  toolsState: toolsReducer,
+  toolsState: toolsReducer
 });
 
 export default rootReducer;

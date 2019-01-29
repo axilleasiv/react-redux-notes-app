@@ -9,7 +9,7 @@ import {
   NOTE_DESELECT,
   NOTE_REMOVE_ACTIVE,
   EDITOR_LOAD,
-  SEARCH_NOTES_RESET,
+  SEARCH_NOTES_RESET
 } from '../constants/actionTypes';
 import { getNextActiveNote } from '../selectors/note';
 
@@ -26,14 +26,14 @@ const doNewFolder = folder => dispatch => {
     type: FOLDER_NEW,
     id: uuidv4()
   });
-} 
+};
 
 const doEditFolder = name => ({
   type: FOLDER_EDIT,
   name: name
 });
 
-const doSaveFolder = (name) => ({
+const doSaveFolder = name => ({
   type: FOLDER_SAVE,
   name: name
 });
@@ -42,44 +42,42 @@ const doDeleteFolder = folder => ({
   type: FOLDER_DELETE
 });
 
-const doSelectFolder = (folder) =>
-  (dispatch, getState) => {
-    const activeFolder = getState().folderState.active;
+const doSelectFolder = folder => (dispatch, getState) => {
+  const activeFolder = getState().folderState.active;
+
+  dispatch({
+    type: SEARCH_NOTES_RESET
+  });
+
+  dispatch({
+    type: FOLDER_SELECT,
+    folder
+  });
+
+  if (activeFolder.id !== folder.id) {
+    const note = getNextActiveNote(getState());
 
     dispatch({
-      type: SEARCH_NOTES_RESET
+      type: NOTE_SELECT,
+      note,
+      selected: false
     });
 
-    dispatch({
-      type: FOLDER_SELECT,
-      folder
-    });
-
-    if (activeFolder.id !== folder.id) {
-      const note = getNextActiveNote(getState());
-
+    if (note) {
       dispatch({
-        type: NOTE_SELECT,
-        note,
-        selected: false
+        type: EDITOR_LOAD,
+        note
       });
-
-      if (note) {
-        dispatch({
-          type: EDITOR_LOAD,
-          note
-        })
-      }
-    } else {
-      dispatch({type: NOTE_DESELECT});
     }
-
+  } else {
+    dispatch({ type: NOTE_DESELECT });
   }
+};
 
 export {
   doNewFolder,
   doEditFolder,
   doSaveFolder,
   doDeleteFolder,
-  doSelectFolder,
+  doSelectFolder
 };

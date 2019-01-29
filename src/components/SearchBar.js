@@ -17,13 +17,13 @@ class SearchBar extends Component {
   }
 
   render() {
-    const { 
+    const {
       search,
       replace,
       replaceEnabled,
       onChangeSearch,
       onChangeReplace,
-      onReplace ,
+      onReplace,
       toggleReplace,
       onClick
     } = this.props;
@@ -42,11 +42,11 @@ class SearchBar extends Component {
         />
         <button onClick={onClick}>Done</button>
         <div className={style.replace}>
-          <input 
+          <input
             type="checkbox"
             id="replace"
             checked={replaceEnabled}
-            onClick={toggleReplace} 
+            onClick={toggleReplace}
           />
           <label htmlFor="replace">Replace</label>
         </div>
@@ -72,11 +72,14 @@ const mapStateToProps = ({ toolsState }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onChangeSearch: ({target}) => dispatch(doNewSearch(target.value)),
-  onChangeReplace: ({target}) => dispatch(doUpdateReplace(target.value)),
+  onChangeSearch: ({ target }) => dispatch(doNewSearch(target.value)),
+  onChangeReplace: ({ target }) => dispatch(doUpdateReplace(target.value)),
   toggleReplace: () => dispatch(doToggleReplace()),
   onReplace: () => dispatch(doReplace()),
   onClick: () => dispatch(doDisableDocSearch())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SearchBar);

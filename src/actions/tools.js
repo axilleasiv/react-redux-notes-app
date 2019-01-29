@@ -10,7 +10,7 @@ import {
   EDITOR_LOAD,
   NOTE_SELECT,
   NOTES_ON_SEARCH,
-  KEY_TOGGLE,
+  KEY_TOGGLE
 } from '../constants/actionTypes';
 import { getNextActiveNote } from '../selectors/note';
 
@@ -24,7 +24,7 @@ const doNewSearch = term => (dispatch, getState) => {
     type: EDITOR_SEARCH,
     term
   });
-}
+};
 
 const doUpdateReplace = term => ({
   type: SEARCH_UPDATE_REPLACE,
@@ -41,52 +41,49 @@ const doReplace = () => (dispatch, getState) => {
     type: EDITOR_REPLACE,
     search,
     replace
-  })
-}
+  });
+};
 
 const doEnableDocSearch = () => ({
   type: SEARCH_DOC_ENABLE
-})
+});
 
 const doDisableDocSearch = () => ({
   type: SEARCH_DOC_DISABLE
 });
 
-const doSearchNotes = term =>
-  (dispatch, getState) => {
+const doSearchNotes = term => (dispatch, getState) => {
+  dispatch({
+    type: SEARCH_NOTES,
+    term
+  });
+
+  dispatch({
+    type: NOTES_ON_SEARCH,
+    term
+  });
+
+  const note = getNextActiveNote(getState());
+
+  dispatch({
+    type: NOTE_SELECT,
+    note,
+    selected: false
+  });
+
+  if (note) {
     dispatch({
-      type: SEARCH_NOTES,
-      term
+      type: EDITOR_LOAD,
+      note
     });
-
-    dispatch({
-      type: NOTES_ON_SEARCH,
-      term
-    });
-
-    const note = getNextActiveNote(getState());
-
-    dispatch({
-      type: NOTE_SELECT,
-      note,
-      selected: false
-    });
-
-    if (note) {
-      dispatch({
-        type: EDITOR_LOAD,
-        note
-      })
-    }
-
   }
+};
 
-const doToggleKey = ({name, value}) => ({
+const doToggleKey = ({ name, value }) => ({
   type: KEY_TOGGLE,
   name,
   value
 });
-  
 
 export {
   doUpdateReplace,

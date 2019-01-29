@@ -1,6 +1,6 @@
 :local(.note) {
   padding: 14px 10px;
-  border-bottom: 1px solid rgba(0,0,0,.07);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
 }
 
 :local(.active) {
@@ -16,7 +16,7 @@
 :local(.title) {
   font-weight: bold;
   font-size: 14px;
-  margin: 0 0 7px; 
+  margin: 0 0 7px;
 }
 
 :local(.subtitle) {

@@ -10,7 +10,7 @@ import {
   EDITOR_LOAD,
   EDITOR_NEW,
   EDITOR_SEARCH,
-  EDITOR_REPLACE,
+  EDITOR_REPLACE
 } from '../constants/actionTypes';
 import React from 'react';
 
@@ -47,10 +47,10 @@ const generateDecorator = highlightTerm => {
   ]);
 };
 
-const getFromRawContent = (rawContent) => {
+const getFromRawContent = rawContent => {
   const parsedJson = JSON.parse(rawContent);
   return EditorState.createWithContent(convertFromRaw(parsedJson));
-}
+};
 
 //TODO TODO check immutability
 const applyUpdateState = (state, action) => ({
@@ -67,7 +67,6 @@ const applyUpdateStateOnSearch = (state, action) => ({
 });
 
 const applyUpdateStateOnReplace = (state, action) => {
-
   const regex = new RegExp(action.search, 'g');
   const { content } = state;
   const selectionsToReplace = [];
@@ -88,15 +87,16 @@ const applyUpdateStateOnReplace = (state, action) => {
   let contentState = content.getCurrentContent();
 
   selectionsToReplace.forEach(selectionState => {
-    contentState = Modifier.replaceText(contentState, selectionState, action.replace);
+    contentState = Modifier.replaceText(
+      contentState,
+      selectionState,
+      action.replace
+    );
   });
 
   return {
     ...state,
-    content: EditorState.push(
-      content,
-      contentState,
-    )
+    content: EditorState.push(content, contentState)
   };
 };
 
@@ -107,8 +107,8 @@ const applyLoadState = (state, action) => {
     ...state,
     content: newContent,
     loaded: true
-  }
-}
+  };
+};
 
 const applyResetState = (state, action) => {
   return {

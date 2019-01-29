@@ -11,11 +11,11 @@ import {
 const INITIAL_STATE = {};
 
 const applySelectFolder = (state, action) => ({
-  ...state, 
+  ...state,
   active: {
     ...action.folder,
     selected: true
-  },
+  }
 });
 
 const applyDeSelectFolder = (state, action) => ({
@@ -31,7 +31,7 @@ const addNewFolder = (state, action) => {
     id: action.id,
     name: 'New Folder',
     new: true
-  }
+  };
 
   return {
     ...state,
@@ -39,20 +39,18 @@ const addNewFolder = (state, action) => {
     active: {
       ...folder,
       selected: true
-    },
-  }
-}
+    }
+  };
+};
 
 const applyEditFolder = (state, action) => {
   const active = state.active;
 
   const folders = state.folders.map(folder =>
-    folder.id === active.id
-      ? { ...folder, name: action.name}
-      : folder
-    );
+    folder.id === active.id ? { ...folder, name: action.name } : folder
+  );
 
-  return  {
+  return {
     ...state,
     folders
   };
@@ -64,7 +62,7 @@ const findNextActiveOnRemove = (list, index) => {
     ...list[list.length - 1],
     selected: true
   };
-}
+};
 
 const applySaveFolder = (state, action) => {
   const prevActive = state.active;
@@ -79,7 +77,7 @@ const applySaveFolder = (state, action) => {
         return true;
       }
       removedIndex = index;
-      
+
       return false;
     });
 
@@ -87,7 +85,7 @@ const applySaveFolder = (state, action) => {
   } else {
     folders = state.folders.map(folder =>
       folder.id === prevActive.id
-        ? {id: folder.id, name: action.name}
+        ? { id: folder.id, name: action.name }
         : folder
     );
 
@@ -95,15 +93,15 @@ const applySaveFolder = (state, action) => {
       id: prevActive.id,
       name: action.name,
       selected: true
-    }
+    };
   }
 
-  return  {
+  return {
     ...state,
     folders,
     active
   };
-}
+};
 
 const applyDeleteFolder = (state, action) => {
   const active = state.active;
@@ -112,9 +110,9 @@ const applyDeleteFolder = (state, action) => {
   return {
     ...state,
     folders,
-    active: findNextActiveOnRemove(folders),
+    active: findNextActiveOnRemove(folders)
   };
-}
+};
 
 function folderReducer(state = INITIAL_STATE, action) {
   switch (action.type) {

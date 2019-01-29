@@ -2,10 +2,10 @@ import React from 'react';
 import Notes from './Notes';
 import style from './SideBar.css';
 
-const SideBar = () =>
+const SideBar = () => (
   <aside className={`${style.sidebar} no-select`}>
     <Notes />
-  </aside>;
-
+  </aside>
+);
 
 export default SideBar;
