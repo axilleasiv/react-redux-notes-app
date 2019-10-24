@@ -3,7 +3,7 @@ import * as defaultFolders from '../constants/folders';
 /* const isNotArchived = archivedIds => note =>
   archivedIds.indexOf(note.id) === -1; */
 
-const belongOnCurrentFolter = folder => note => {
+const belongOnCurrentFolder = folder => note => {
   return note.folderId === folder.id;
 };
 
@@ -24,7 +24,7 @@ const getNotes = ({ noteState, folderState, toolsState }) => {
     return noteState.notes.filter(isNotDeleted).sort(mostRecent);
   } else {
     return noteState.notes
-      .filter(belongOnCurrentFolter(folder))
+      .filter(belongOnCurrentFolder(folder))
       .sort(mostRecent);
   }
 };
